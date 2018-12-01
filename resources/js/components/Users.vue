@@ -6,7 +6,8 @@
                     <div class="card-header">
                         <h3 class="card-title">Users Table</h3>
                         <div class="card-tools">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#addNewModal">Add New <i class="fas fa-user-plus"></i></button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addNewModal">Add New <i
+                                    class="fas fa-user-plus"></i></button>
                             <!--<div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
                                 <div class="input-group-append">
@@ -18,7 +19,8 @@
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
-                            <tbody><tr>
+                            <tbody>
+                            <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
@@ -36,7 +38,8 @@
                                     <a href=""><i class="fa fa-trash red"></i></a>
                                 </td>
                             </tr>
-                            </tbody></table>
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -45,7 +48,8 @@
         </div>
 
         <!-- Modal -->
-        <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -54,8 +58,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="createUser">
+                        <div class="modal-body">
                             <div class="form-group">
                                 <input
                                         v-model="form.name"
@@ -119,12 +123,12 @@
                                 </textarea>
                                 <has-error :form="form" field="bio"></has-error>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Create</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -134,15 +138,22 @@
 
 <script>
     export default {
-        data(){
+        data() {
             return {
                 form: new Form({
-                    name:'',
-                    email:'',
-                    password:'',
-                    type:'',
-                    bio:'',
+                    name: '',
+                    email: '',
+                    password: '',
+                    type: '',
+                    bio: '',
                 })
+            }
+        },
+        methods:{
+            createUser(){
+                this.form.post('api/user').then((res)=>{
+                    console.log(res)
+                });
             }
         },
         mounted() {
