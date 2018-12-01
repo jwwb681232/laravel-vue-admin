@@ -55,10 +55,74 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <form @submit.prevent="login" @keydown="form.onKeydown($event)">
+                            <div class="form-group">
+                                <input
+                                        v-model="form.name"
+                                        name="name"
+                                        type="text"
+                                        id="name"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('name') }"
+                                        placeholder="Name"
+                                >
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        v-model="form.email"
+                                        name="email"
+                                        type="email"
+                                        id="email"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('email') }"
+                                        placeholder="Email Address"
+                                >
+                                <has-error :form="form" field="email"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        v-model="form.password"
+                                        name="password"
+                                        type="password"
+                                        id="password"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('password') }"
+                                        placeholder="Enter Password"
+                                >
+                                <has-error :form="form" field="password"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <select
+                                        v-model="form.type"
+                                        name="type"
+                                        id="type"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('type') }"
+                                >
+                                    <option value="">Select User Role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="user">Standard User</option>
+                                    <option value="author">Author</option>
+                                </select>
+                                <has-error :form="form" field="type"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <textarea
+                                        v-model="form.bio"
+                                        name="bio"
+                                        id="bio"
+                                        class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('bio') }"
+                                        placeholder="Short bio for user(Option)"
+                                >
+                                </textarea>
+                                <has-error :form="form" field="bio"></has-error>
+                            </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Create</button>
                     </div>
                 </div>
@@ -70,6 +134,17 @@
 
 <script>
     export default {
+        data(){
+            return {
+                form: new Form({
+                    name:'',
+                    email:'',
+                    password:'',
+                    type:'',
+                    bio:'',
+                })
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         }
