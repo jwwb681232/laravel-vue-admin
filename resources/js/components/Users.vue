@@ -161,7 +161,11 @@
             createUser(){
                 this.$Progress.start();
                 this.form.post('api/user').then((res)=>{
-                    console.log(res)
+                    $('#addNewModal').modal('hide');
+                    toast({
+                        type:'success',
+                        title:'User Created In Successfully.'
+                    });
                 });
                 this.$Progress.finish();
             }

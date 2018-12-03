@@ -27,6 +27,17 @@ Vue.use(VueProgressBar,{
     height:'2px'
 });
 
+import swal from 'sweetalert2'
+window.swal = swal;
+const toast = swal.mixin({
+    toast:true,
+    position:'top-end',
+    showConfirmButton:false,
+    timer:3000
+});
+window.toast = toast;
+
+
 let routes = [
     {path:'/dashboard',component:require('./components/Dashboard.vue')},
     {path:'/users',component:require('./components/Users.vue')},
