@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Users Table</h3>
                         <div class="card-tools">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#addNewModal">Add New <i
+                            <button class="btn btn-success" @click="newModel()">Add New <i
                                     class="fas fa-user-plus"></i></button>
                             <!--<div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -35,7 +35,7 @@
                                 <td>{{user.type | upText}}</td>
                                 <td>{{user.created_at | myDate}}</td>
                                 <td>
-                                    <a href=""><i class="fa fa-edit blue"></i></a>
+                                    <a href="#" @click="editModel(user)"><i class="fa fa-edit blue"></i></a>
                                     /
                                     <a href="#" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                                 </td>
@@ -153,6 +153,14 @@
             }
         },
         methods:{
+            editModel(user){
+                this.form.fill(user);
+                $('#addNewModal').modal('show');
+            },
+            newModel(){
+                this.form.reset();
+                $('#addNewModal').modal('show');
+            },
             deleteUser(id){
                 swal({
                     title: 'Are you sure?',
