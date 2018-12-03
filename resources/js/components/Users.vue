@@ -37,7 +37,7 @@
                                 <td>
                                     <a href=""><i class="fa fa-edit blue"></i></a>
                                     /
-                                    <a href=""><i class="fa fa-trash red"></i></a>
+                                    <a href="#" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -153,6 +153,29 @@
             }
         },
         methods:{
+            deleteUser(id){
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.$Progress.start();
+                        this.form.delete('api/user/'+id).then(()=>{
+                            toast({type:'success', title:'Deleted!'});
+                            Fire.$emit('AfterCreate');
+                            this.$Progress.finish();
+                        }).catch(()=>{
+                            toast({type:'error', title:'failed'});
+                            this.$Progress.fail();
+                        });
+                    }
+                })
+            },
             loadUsers(){
                 axios.get('api/user').then(({data})=>{
                     this.users = data.data
@@ -166,12 +189,22 @@
                         type:'success',
                         title:'User Created In Successfully.'
                     });
+                    this.$Progress.finish();
+                    Fire.$emit('AfterCreate');
+                }).catch(()=>{
+                    toast({
+                        type:'error',
+                        title:'failed'
+                    });
+                    this.$Progress.fail();
                 });
-                this.$Progress.finish();
             }
         },
         mounted() {
             this.loadUsers();
+            Fire.$on('AfterCreate', () => {
+                this.loadUsers();
+            });
         }
     }
 </script>

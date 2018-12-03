@@ -50,6 +50,10 @@ const router = new VueRouter({
 
 Vue.filter('upText',(text)=>text.charAt(0).toUpperCase()+text.slice(1));
 Vue.filter('myDate',(dateString)=>moment(dateString).format('MMMM Do YY'));
+
+window.Fire = new Vue();
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
