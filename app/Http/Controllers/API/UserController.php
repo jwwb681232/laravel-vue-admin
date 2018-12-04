@@ -9,6 +9,16 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('api');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -67,7 +77,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password' => 'sometimes|string|between:6,20',
+            'type'=>'required'
+        ]);
+        $user = User::findOrFail($id);
+        $user->update($request->toArray());
+        return ['message'=>'Edit Success'];
     }
 
     /**

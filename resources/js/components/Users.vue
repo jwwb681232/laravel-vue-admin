@@ -35,9 +35,9 @@
                                 <td>{{user.type | upText}}</td>
                                 <td>{{user.created_at | myDate}}</td>
                                 <td>
-                                    <a href="#" @click="editModel(user)"><i class="fa fa-edit blue"></i></a>
+                                    <a href="javascript:void (0)" @click="editModel(user)"><i class="fa fa-edit blue"></i></a>
                                     /
-                                    <a href="#" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
+                                    <a href="javascript:void (0)" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -55,12 +55,12 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNewModalLabel">Add New</h5>
+                        <h5 class="modal-title" id="addNewModalLabel">{{editMode ? 'Update User\'s Info' : 'Add New'}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent="editMode ? updateUser() : createUser()">
                         <div class="modal-body">
                             <div class="form-group">
                                 <input
@@ -128,7 +128,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
+                            <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
                         </div>
                     </form>
                 </div>
@@ -142,8 +143,10 @@
     export default {
         data() {
             return {
+                editMode:false,
                 users:{},
                 form: new Form({
+                    id:'',
                     name: '',
                     email: '',
                     password: '',
@@ -153,11 +156,32 @@
             }
         },
         methods:{
+            updateUser(){
+                this.$Progress.start();
+                this.form.put('api/user/'+this.form.id).then(()=>{
+                    $('#addNewModal').modal('hide');
+                    toast({
+                        type:'success',
+                        title:'User Created In Successfully.'
+                    });
+                    this.$Progress.finish();
+                    Fire.$emit('AfterCreate');
+                }).catch(()=>{
+                    toast({
+                        type:'error',
+                        title:'failed'
+                    });
+                    this.$Progress.fail();
+                });
+            },
             editModel(user){
+                this.editMode = true;
+                this.form.reset();
                 this.form.fill(user);
                 $('#addNewModal').modal('show');
             },
             newModel(){
+                this.editMode = false;
                 this.form.reset();
                 $('#addNewModal').modal('show');
             },
