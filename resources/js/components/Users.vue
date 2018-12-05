@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
+        <div class="row mt-3">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
@@ -52,7 +52,7 @@
         <!-- Modal -->
         <div class="modal fade" id="addNewModal" tabindex="-1" role="dialog" aria-labelledby="addNewModalLabel"
              aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addNewModalLabel">{{editMode ? 'Update User\'s Info' : 'Add New'}}</h5>
