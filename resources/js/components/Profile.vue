@@ -70,34 +70,67 @@
                                 <div class="form-group">
                                     <label for="name" class="col-sm-2 control-label">Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" v-model="form.name" class="form-control" id="name" placeholder="Name">
+                                        <input
+                                                v-model="form.name"
+                                                type="text"
+                                                class="form-control"
+                                                name="name"
+                                                id="name"
+                                                placeholder="Name"
+                                        >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" v-model="form.email" class="form-control" id="email" placeholder="Email">
+                                        <input
+                                                v-model="form.email"
+                                                type="email"
+                                                class="form-control"
+                                                name="email"
+                                                id="email"
+                                                placeholder="Email"
+                                        >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputName2" class="col-sm-2 control-label">Name</label>
-
+                                    <label for="bio" class="col-sm-2 control-label">Bio</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                                        <textarea
+                                                v-model="form.bio"
+                                                class="form-control"
+                                                name="bio"
+                                                id="bio"
+                                                placeholder="Bio"
+                                        ></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
+                                    <label for="type" class="col-sm-2 control-label">Role</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                                        <select
+                                                v-model="form.type"
+                                                class="form-control"
+                                                name="type"
+                                                id="type"
+                                        >
+                                            <option value="">Select User Role</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="user">Standard User</option>
+                                            <option value="author">Author</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
+                                    <label for="photo" class="col-sm-2 control-label">Photo</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                                        <input class="form-control" @change="updateProfile" type="file" name="photo" id="photo">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label">Password (leave empty if not changing)</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" name="password" id="password" placeholder="Enter Password">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -145,6 +178,16 @@
             axios.get('api/user/profile').then(({data})=>{
                 this.form.fill(data);
             }).catch();
+        },
+        methods:{
+            updateProfile(e){
+                let file = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = () => {
+                    this.form.photo = reader.result;
+                };
+            }
         },
         mounted() {
             console.log('Component mounted.')
