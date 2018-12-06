@@ -71854,6 +71854,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       reader.onloadend = function () {
         _this2.form.photo = reader.result;
       };
+    },
+    updateInfo: function updateInfo() {
+      this.form.put('api/user/profile').then(function () {}).catch(function () {});
     }
   },
   mounted: function mounted() {
@@ -72098,9 +72101,24 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(2),
                     _vm._v(" "),
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.updateInfo($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Update")]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -72234,36 +72252,6 @@ var staticRenderFns = [
             placeholder: "Enter Password"
           }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c("div", { staticClass: "checkbox" }, [
-          _c("label", [
-            _c("input", { attrs: { type: "checkbox" } }),
-            _vm._v(" I agree to the "),
-            _c("a", { attrs: { href: "#" } }, [_vm._v("terms and conditions")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-danger", attrs: { type: "submit" } },
-          [_vm._v("Submit")]
-        )
       ])
     ])
   }

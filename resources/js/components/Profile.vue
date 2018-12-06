@@ -133,7 +133,7 @@
                                         <input class="form-control" type="text" name="password" id="password" placeholder="Enter Password">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <div class="checkbox">
                                             <label>
@@ -141,10 +141,10 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                        <button @click.prevent="updateInfo" type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -187,6 +187,13 @@
                 reader.onloadend = () => {
                     this.form.photo = reader.result;
                 };
+            },
+            updateInfo(){
+                this.form.put('api/user/profile').then(()=>{
+
+                }).catch(()=>{
+
+                });
             }
         },
         mounted() {
