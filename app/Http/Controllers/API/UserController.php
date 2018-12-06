@@ -62,8 +62,9 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $user = auth('api')->user();
-        return $request->photo;
+        $name = \Illuminate\Support\Str::uuid().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+        //$user = auth('api')->user();
+        return $name;
     }
 
     /**
