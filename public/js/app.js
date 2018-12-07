@@ -30817,6 +30817,15 @@ Vue.component('example-component', __webpack_require__(202)); // const files = r
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
 /**
+ * 可以在此处就请求到用户拥有的权限，然后存在localStorage里，
+ * 粗粒度的菜单权限可以直接在master.blade.php布局里就过滤
+ * 细粒度的权限可以在vue 的 v-if 方法来根据localStorage里的和具体某个权限进行判断
+ */
+//axios.get('api/user/profile').then(({data})=>{
+//    console.log(data);
+//}).catch();
+
+/**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
