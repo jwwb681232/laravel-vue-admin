@@ -1,8 +1,12 @@
 <style>
-.widget-user-header{
+    .widget-user-header{
     background-position: center center;
     background-size:cover;
     height:200px;
+}
+.user-avatar{
+    height:80px;
+    width: 80px;
 }
 </style>
 <template>
@@ -68,8 +72,8 @@
                         <div class="tab-pane active show" id="settings">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-10">
+                                    <label for="name" class="col-sm-12 control-label">Name</label>
+                                    <div class="col-sm-12">
                                         <input
                                                 v-model="form.name"
                                                 type="text"
@@ -81,8 +85,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="col-sm-2 control-label">Email</label>
-                                    <div class="col-sm-10">
+                                    <label for="email" class="col-sm-12 control-label">Email</label>
+                                    <div class="col-sm-12">
                                         <input
                                                 v-model="form.email"
                                                 type="email"
@@ -94,8 +98,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bio" class="col-sm-2 control-label">Bio</label>
-                                    <div class="col-sm-10">
+                                    <label for="bio" class="col-sm-12 control-label">Bio</label>
+                                    <div class="col-sm-12">
                                         <textarea
                                                 v-model="form.bio"
                                                 class="form-control"
@@ -106,8 +110,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="type" class="col-sm-2 control-label">Role</label>
-                                    <div class="col-sm-10">
+                                    <label for="type" class="col-sm-12 control-label">Role</label>
+                                    <div class="col-sm-12">
                                         <select
                                                 v-model="form.type"
                                                 class="form-control"
@@ -122,28 +126,33 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="photo" class="col-sm-2 control-label">Photo</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" @change="updateProfile" type="file" name="photo" id="photo">
+                                    <label for="photo" class="col-sm-12 control-label">Photo</label>
+                                    <div class="col-sm-12 form-inline">
+                                        <img class="img-circle elevation-2 user-avatar" :src="form.photo" alt="User Avatar">
+                                        <input
+                                                @change="updateProfile"
+                                                class="form-control"
+                                                type="file"
+                                                name="photo"
+                                                id="photo"
+                                        >
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-2 control-label">Password (leave empty if not changing)</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" name="password" id="password" placeholder="Enter Password">
+                                    <label for="password" class="col-sm-12 control-label">Password (leave empty if not changing)</label>
+                                    <div class="col-sm-12">
+                                        <input
+                                                v-model="form.password"
+                                                class="form-control"
+                                                type="text"
+                                                name="password"
+                                                id="password"
+                                                placeholder="Enter Password"
+                                        >
                                     </div>
                                 </div>
-                                <!--<div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="col-sm-offset-2 col-sm-12">
                                         <button @click.prevent="updateInfo" type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
@@ -182,6 +191,10 @@
         methods:{
             updateProfile(e){
                 let file = e.target.files[0];
+                if(!file){
+                    this.form.photo = '';
+                    return;
+                }
                 let reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
@@ -189,10 +202,21 @@
                 };
             },
             updateInfo(){
+                this.$Progress.start();
                 this.form.put('api/user/profile').then(()=>{
-
+                    swal({
+                        type: 'success',
+                        title: 'Success',
+                        text: 'Success',
+                    });
+                    this.$Progress.finish();
                 }).catch(()=>{
-
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading error',
+                    });
+                    this.$Progress.fail();
                 });
             }
         },

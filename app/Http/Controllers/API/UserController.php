@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Storage;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -57,14 +58,28 @@ class UserController extends Controller
 
     public function profile()
     {
-        return auth('api')->user();
+        $user = auth('api')->user();
+        $user->photo = asset('storage'.$user->photo);
+        return $user;
     }
 
     public function updateProfile(Request $request)
     {
-        $name = \Illuminate\Support\Str::uuid().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
-        //$user = auth('api')->user();
-        return $name;
+        $user = auth('api')->user();
+
+        if (stripos($request->photo,'http') === false){
+            $photoPath = convert_base64_to_file($request->photo);
+            $request->merge(['photo'=>$photoPath]);
+        }else{
+            $request->request->remove('photo');
+        }
+
+        if (!empty($request->password)){
+            $request->request->set('password',bcrypt($request->password));
+        }
+
+        $user->update($request->all());
+        return ['message'=>'Success'];
     }
 
     /**
