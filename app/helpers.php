@@ -21,7 +21,7 @@ if ( ! function_exists("convert_base64_to_file")) {
         $fileName = Str::uuid().$suffix;
 
         if ($fileData != "") {
-            $path = '/'.date('ym').'/'.$fileName;
+            $path = '/avatar/'.date('ym').'/'.$fileName;
             Storage::disk('public')->put($path, base64_decode($fileData));
         }
 
