@@ -71863,6 +71863,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return;
       }
 
+      var limit = 1024 * 1024 * 2;
+
+      if (file.size > limit) {
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: 'You are uploading too large'
+        });
+        return;
+      }
+
       var reader = new FileReader();
       reader.readAsDataURL(file);
 

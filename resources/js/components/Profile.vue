@@ -195,6 +195,17 @@
                     this.form.photo = '';
                     return;
                 }
+
+                let limit = 1024 * 1024 * 2;
+                if (file.size > limit){
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'You are uploading too large',
+                    });
+                    return ;
+                }
+
                 let reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
