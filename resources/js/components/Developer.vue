@@ -12,8 +12,12 @@
 
 <script>
     export default {
+        beforeCreate(){
+            this.$Progress.start();
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.$Progress.finish();
         }
     }
 </script>

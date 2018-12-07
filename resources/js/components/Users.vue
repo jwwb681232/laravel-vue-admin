@@ -232,11 +232,15 @@
                 });
             }
         },
+        beforeCreate(){
+            this.$Progress.start();
+        },
         mounted() {
             this.loadUsers();
             Fire.$on('AfterCreate', () => {
                 this.loadUsers();
             });
+            this.$Progress.finish();
         }
     }
 </script>

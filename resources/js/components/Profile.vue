@@ -200,6 +200,9 @@
                 })
             }
         },
+        beforeCreate(){
+            this.$Progress.start();
+        },
         created(){
             axios.get('api/user/profile').then(({data})=>{
                 this.form.fill(data);
@@ -247,7 +250,8 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.$Progress.finish();
         }
     }
 </script>
