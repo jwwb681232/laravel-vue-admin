@@ -8,6 +8,13 @@
     height:80px;
     width: 80px;
 }
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: red;
+}
 </style>
 <template>
     <div class="container">
@@ -78,10 +85,12 @@
                                                 v-model="form.name"
                                                 type="text"
                                                 class="form-control"
+                                                :class="{ 'is-invalid': form.errors.has('name') }"
                                                 name="name"
                                                 id="name"
                                                 placeholder="Name"
                                         >
+                                        <has-error :form="form" field="name"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -91,10 +100,12 @@
                                                 v-model="form.email"
                                                 type="email"
                                                 class="form-control"
+                                                :class="{ 'is-invalid': form.errors.has('email') }"
                                                 name="email"
                                                 id="email"
                                                 placeholder="Email"
                                         >
+                                        <has-error :form="form" field="email"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -103,10 +114,12 @@
                                         <textarea
                                                 v-model="form.bio"
                                                 class="form-control"
+                                                :class="{ 'is-invalid': form.errors.has('bio') }"
                                                 name="bio"
                                                 id="bio"
                                                 placeholder="Bio"
                                         ></textarea>
+                                        <has-error :form="form" field="bio"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -115,6 +128,7 @@
                                         <select
                                                 v-model="form.type"
                                                 class="form-control"
+                                                :class="{ 'is-invalid': form.errors.has('type') }"
                                                 name="type"
                                                 id="type"
                                         >
@@ -123,6 +137,7 @@
                                             <option value="user">Standard User</option>
                                             <option value="author">Author</option>
                                         </select>
+                                        <has-error :form="form" field="type"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -144,11 +159,13 @@
                                         <input
                                                 v-model="form.password"
                                                 class="form-control"
+                                                :class="{ 'is-invalid': form.errors.has('password') }"
                                                 type="text"
                                                 name="password"
                                                 id="password"
                                                 placeholder="Enter Password"
                                         >
+                                        <has-error :form="form" field="password"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -215,17 +232,15 @@
             updateInfo(){
                 this.$Progress.start();
                 this.form.put('api/user/profile').then(()=>{
-                    swal({
-                        type: 'success',
-                        title: 'Success',
-                        text: 'Success',
+                    toast({
+                        type:'success',
+                        title:'Edit Success'
                     });
                     this.$Progress.finish();
                 }).catch(()=>{
-                    swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'You are uploading error',
+                    toast({
+                        type:'error',
+                        title:'failed'
                     });
                     this.$Progress.fail();
                 });

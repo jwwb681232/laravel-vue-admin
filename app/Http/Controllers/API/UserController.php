@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\User\UpdateProfileRequest;
 use Storage;
 use App\User;
 use Illuminate\Http\Request;
@@ -39,10 +40,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|unique:users|max:255',
+            'bio'      => 'max:21845',
             'password' => 'required|string|between:6,20',
-            'type'=>'required'
+            'type'     => 'required',
         ]);
         return User::create(
             [
@@ -63,13 +65,13 @@ class UserController extends Controller
         return $user;
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(UpdateProfileRequest $request)
     {
         $user = auth('api')->user();
 
         if (stripos($request->photo,'http') === false){
             $photoPath = convert_base64_to_file($request->photo);
-            $request->merge(['photo'=>$photoPath]);
+            $request->request->set('photo',$photoPath);
         }else{
             $request->request->remove('photo');
         }
@@ -78,7 +80,7 @@ class UserController extends Controller
             $request->request->set('password',bcrypt($request->password));
         }
 
-        $user->update($request->all());
+        $user->update($request->request->all());
         return ['message'=>'Success'];
     }
 
