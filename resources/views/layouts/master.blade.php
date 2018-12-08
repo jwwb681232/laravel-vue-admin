@@ -14,6 +14,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link rel="stylesheet" href="/css/app.css">
 </head>
+<style>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition-duration: 0.1s;
+        transition-property: opacity;
+        transition-timing-function: ease;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0
+    }
+</style>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
 
@@ -125,8 +138,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
-                <router-view></router-view>
                 <vue-progress-bar></vue-progress-bar>
+                <transition name="fade" mode="out-in">
+                    <transition
+                            name="fade"
+                            mode="out-in"
+                            @beforeLeave="beforeLeave"
+                            @enter="enter"
+                            @afterEnter="afterEnter"
+                    >
+                        <router-view><router-view/>
+                    </transition>
+                </transition>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->

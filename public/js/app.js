@@ -30833,7 +30833,24 @@ Vue.component('example-component', __webpack_require__(202)); // const files = r
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  methods: {
+    beforeLeave: function beforeLeave(element) {
+      this.prevHeight = getComputedStyle(element).height;
+    },
+    enter: function enter(element) {
+      var _getComputedStyle = getComputedStyle(element),
+          height = _getComputedStyle.height;
+
+      element.style.height = this.prevHeight;
+      setTimeout(function () {
+        element.style.height = height;
+      });
+    },
+    afterEnter: function afterEnter(element) {
+      element.style.height = 'auto';
+    }
+  }
 });
 
 /***/ }),
