@@ -54505,6 +54505,10 @@ var routes = [{
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(95)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(93)
@@ -54513,7 +54517,7 @@ var __vue_template__ = __webpack_require__(94)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -54583,9 +54587,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      addNewModalOpened: false,
+      isLoading: false,
+      labelPosition: "left",
+      labels: {
+        left: 'Label左对齐',
+        right: 'Label右对齐'
+      },
+      model: {
+        menuName: "",
+        menuPath: ""
+      },
+      validationRules: {
+        required: ['menuName', 'menuPath']
+      },
       datas: [{
         id: 5,
         name: '测试5',
@@ -54690,6 +54746,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     trClick: function trClick(data, event) {//log('trClick', data, event);
     },
     trdblclick: function trdblclick(data, event) {//log('trdblclick', data, event);
+    },
+    submit: function submit() {
+      var _this = this;
+
+      this.isLoading = true;
+      var validResult = this.$refs.form.valid();
+
+      if (validResult.result) {
+        this.$Message("验证成功");
+        setTimeout(function () {
+          _this.isLoading = false;
+        }, 1000);
+      } else {
+        this.isLoading = false;
+      }
+    },
+    reset: function reset() {
+      this.$refs.form.reset();
+      this.addNewModalOpened = false;
     }
   }
 });
@@ -54702,145 +54777,299 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card card-primary card-outline" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "card-body pad table-responsive" },
-      [
-        _c(
-          "p",
-          [
-            _c(
-              "Button",
-              { attrs: { "text-color": "blue", icon: "h-icon-plus" } },
-              [_vm._v("Add New")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "Table",
-          {
-            ref: "table",
-            attrs: { datas: _vm.datas, checkbox: "", selectWhenClickTr: "" },
-            on: {
-              select: _vm.onselect,
-              trclick: _vm.trClick,
-              trdblclick: _vm.trdblclick
-            }
-          },
-          [
-            _c("TableItem", {
-              attrs: {
-                title: "ID",
-                prop: "id",
-                align: "center",
-                width: 80,
-                fixed: "left"
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: { title: "年龄", prop: "age", align: "center", width: 150 }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "地址",
-                prop: "address",
-                align: "center",
-                width: 150
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "姓名",
-                prop: "name",
-                align: "center",
-                width: 150
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: { title: "年龄", prop: "age", align: "center", width: 150 }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "地址",
-                prop: "address",
-                align: "center",
-                width: 150
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "姓名",
-                prop: "name",
-                align: "center",
-                width: 150
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: { title: "年龄", prop: "age", align: "center", width: 150 }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "地址",
-                prop: "address",
-                align: "center",
-                width: 150
-              }
-            }),
-            _vm._v(" "),
-            _c("TableItem", {
-              attrs: {
-                title: "操作",
-                align: "center",
-                width: 80,
-                fixed: "right"
-              },
-              scopedSlots: _vm._u([
+  return _c(
+    "div",
+    { staticClass: "card card-primary card-outline" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body pad table-responsive" },
+        [
+          _c(
+            "p",
+            [
+              _c(
+                "Button",
                 {
-                  key: "default",
-                  fn: function(ref) {
-                    var data = ref.data
-                    return [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "h-btn h-btn-s h-btn-red",
-                          on: {
-                            click: function($event) {
-                              _vm.remove(_vm.datas, data)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "h-icon-trash" })]
-                      )
-                    ]
+                  attrs: { "text-color": "blue", icon: "h-icon-plus" },
+                  on: {
+                    click: function($event) {
+                      _vm.addNewModalOpened = true
+                    }
                   }
+                },
+                [_vm._v("Add New")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "Table",
+            {
+              ref: "table",
+              attrs: { datas: _vm.datas, checkbox: "", selectWhenClickTr: "" },
+              on: {
+                select: _vm.onselect,
+                trclick: _vm.trClick,
+                trdblclick: _vm.trdblclick
+              }
+            },
+            [
+              _c("TableItem", {
+                attrs: {
+                  title: "ID",
+                  prop: "id",
+                  align: "center",
+                  width: 80,
+                  fixed: "left"
                 }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "年龄",
+                  prop: "age",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "地址",
+                  prop: "address",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "姓名",
+                  prop: "name",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "年龄",
+                  prop: "age",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "地址",
+                  prop: "address",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "姓名",
+                  prop: "name",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "年龄",
+                  prop: "age",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "地址",
+                  prop: "address",
+                  align: "center",
+                  width: 150
+                }
+              }),
+              _vm._v(" "),
+              _c("TableItem", {
+                attrs: {
+                  title: "操作",
+                  align: "center",
+                  width: 80,
+                  fixed: "right"
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var data = ref.data
+                      return [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "h-btn h-btn-s h-btn-red",
+                            on: {
+                              click: function($event) {
+                                _vm.remove(_vm.datas, data)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "h-icon-trash" })]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              }),
+              _vm._v(" "),
+              _c("div", { attrs: { slot: "empty" }, slot: "empty" }, [
+                _vm._v("自定义提醒：暂时无数据")
               ])
-            }),
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "Modal",
+        {
+          model: {
+            value: _vm.addNewModalOpened,
+            callback: function($$v) {
+              _vm.addNewModalOpened = $$v
+            },
+            expression: "addNewModalOpened"
+          }
+        },
+        [
+          _c("div", { staticClass: "card card-primary" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h3", { staticClass: "card-title" }, [_vm._v("Add New")])
+            ]),
             _vm._v(" "),
-            _c("div", { attrs: { slot: "empty" }, slot: "empty" }, [
-              _vm._v("自定义提醒：暂时无数据")
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                [
+                  _c(
+                    "Form",
+                    {
+                      ref: "form",
+                      attrs: {
+                        "label-position": _vm.labelPosition,
+                        "label-width": 90,
+                        rules: _vm.validationRules,
+                        model: _vm.model
+                      }
+                    },
+                    [
+                      _c(
+                        "FormItem",
+                        { attrs: { label: "菜单名", prop: "menuName" } },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.model.menuName,
+                                expression: "model.menuName"
+                              }
+                            ],
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.model.menuName },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.model,
+                                  "menuName",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "FormItem",
+                        { attrs: { label: "菜单链接", prop: "menuPath" } },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.model.menuPath,
+                                expression: "model.menuPath"
+                              }
+                            ],
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.model.menuPath },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.model,
+                                  "menuPath",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "FormItem",
+                        [
+                          _c(
+                            "Button",
+                            {
+                              attrs: {
+                                color: "primary",
+                                loading: _vm.isLoading
+                              },
+                              on: { click: _vm.submit }
+                            },
+                            [_vm._v("提交")]
+                          ),
+                          _vm._v("   \n                            "),
+                          _c("Button", { on: { click: _vm.reset } }, [
+                            _vm._v("取消")
+                          ])
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ])
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -54863,6 +55092,46 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-78617599", module.exports)
   }
 }
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(96);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("451d1e83", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78617599\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Menus.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78617599\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Menus.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.h-modal .h-notify-content {\n    padding: 0!important;\n}\n.card{\n    margin-bottom:0!important;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

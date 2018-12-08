@@ -1,3 +1,11 @@
+<style>
+    .h-modal .h-notify-content {
+        padding: 0!important;
+    }
+    .card{
+        margin-bottom:0!important;
+    }
+</style>
 <template>
     <div class="card card-primary card-outline">
         <div class="card-header">
@@ -8,7 +16,7 @@
         </div>
         <div class="card-body pad table-responsive">
             <p>
-                <Button text-color="blue" icon="h-icon-plus">Add New</Button>
+                <Button @click="addNewModalOpened=true" text-color="blue" icon="h-icon-plus">Add New</Button>
             </p>
             <Table :datas="datas" ref="table" @select="onselect" checkbox @trclick="trClick" @trdblclick="trdblclick" selectWhenClickTr>
                 <TableItem title="ID"  prop="id" align="center" :width="80" fixed="left"></TableItem>
@@ -25,6 +33,36 @@
             </Table>
         </div>
         <!-- /.card -->
+        <Modal v-model="addNewModalOpened">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add New</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div>
+                        <Form ref="form" :label-position="labelPosition" :label-width="90" :rules="validationRules" :model="model">
+                            <FormItem label="菜单名" prop="menuName">
+                                <input type="text" v-model="model.menuName" />
+                            </FormItem>
+                            <FormItem label="菜单链接" prop="menuPath">
+                                <input type="text" v-model="model.menuPath" />
+                            </FormItem>
+                            <FormItem>
+                                <Button color="primary" :loading="isLoading" @click="submit">提交</Button>&nbsp;&nbsp;&nbsp;
+                                <Button @click="reset">取消</Button>
+                            </FormItem>
+                        </Form>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!--<div slot="footer">
+                <Button color="primary">确认</Button>
+                <Button @click="addNewModalOpened=false">关闭</Button>
+                <Button color="red" @click="addNewModalOpened=false">删除</Button>
+            </div>-->
+        </Modal>
     </div>
 </template>
 
@@ -32,6 +70,23 @@
     export default {
         data() {
             return {
+                addNewModalOpened:false,
+                isLoading: false,
+                labelPosition: "left",
+                labels: {
+                    left: 'Label左对齐',
+                    right: 'Label右对齐',
+                },
+                model: {
+                    menuName: "",
+                    menuPath: ""
+                },
+                validationRules: {
+                    required: [
+                        'menuName',
+                        'menuPath'
+                    ]
+                },
                 datas : [{ id: 5, name: '测试5', age: 12, address: "上海" },
                     { id: 6, name: '测试6', age: 12, address: "上海" },
                     { id: 7, name: '测试7', age: 12, address: "上海" },
@@ -73,6 +128,22 @@
             },
             trdblclick(data, event) {
                 //log('trdblclick', data, event);
+            },
+            submit() {
+                this.isLoading = true;
+                let validResult = this.$refs.form.valid();
+                if (validResult.result) {
+                    this.$Message("验证成功");
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, 1000);
+                } else {
+                    this.isLoading = false;
+                }
+            },
+            reset() {
+                this.$refs.form.reset();
+                this.addNewModalOpened = false;
             }
         }
     }
