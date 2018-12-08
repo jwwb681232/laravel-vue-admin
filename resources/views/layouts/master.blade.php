@@ -137,19 +137,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="content-wrapper">
         <!-- Main content -->
         <div class="content">
-            <div class="container-fluid">
+            <div class="container-fluid" style="padding-top: 10px;">
                 <vue-progress-bar></vue-progress-bar>
-                <transition name="fade" mode="out-in">
-                    <transition
-                            name="fade"
-                            mode="out-in"
-                            @beforeLeave="beforeLeave"
-                            @enter="enter"
-                            @afterEnter="afterEnter"
-                    >
-                        <router-view><router-view/>
-                    </transition>
-                </transition>
+                <router-view><router-view/>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->
