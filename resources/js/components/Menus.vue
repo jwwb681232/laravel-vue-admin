@@ -22,13 +22,11 @@
                 <TableItem title="ID"  prop="id" align="center" :width="80" fixed="left"></TableItem>
                 <TableItem title="年龄" prop="age" align="center" :width="150"></TableItem>
                 <TableItem title="地址" prop="address" align="center" :width="150"></TableItem>
-                <TableItem title="姓名" prop="name" align="center" :width="150"></TableItem>
-                <TableItem title="年龄" prop="age" align="center" :width="150"></TableItem>
-                <TableItem title="地址" prop="address" align="center" :width="150"></TableItem>
-                <TableItem title="姓名" prop="name" align="center" :width="150"></TableItem>
-                <TableItem title="年龄" prop="age" align="center" :width="150"></TableItem>
-                <TableItem title="地址" prop="address" align="center" :width="150"></TableItem>
-                <TableItem title="操作" align="center" :width="80" fixed="right"><template slot-scope="{data}"><button class="h-btn h-btn-s h-btn-red" @click="remove(datas, data)"><i class="h-icon-trash"></i></button></template></TableItem>
+                <TableItem title="操作" align="center" :width="80" fixed="right">
+                    <template slot-scope="{data}">
+                        <button class="h-btn h-btn-s h-btn-red" @click="remove(datas, data)"><i class="h-icon-trash"></i></button>
+                    </template>
+                </TableItem>
                 <div slot="empty">自定义提醒：暂时无数据</div>
             </Table>
         </div>
@@ -87,7 +85,8 @@
                         'menuPath'
                     ]
                 },
-                datas : [{ id: 5, name: '测试5', age: 12, address: "上海" },
+                datas : [
+                    { id: 5, name: '测试5', age: 12, address: "上海" },
                     { id: 6, name: '测试6', age: 12, address: "上海" },
                     { id: 7, name: '测试7', age: 12, address: "上海" },
                     { id: 5, name: '测试5', age: 12, address: "上海" },
