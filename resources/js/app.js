@@ -22,6 +22,9 @@ window.Form = Form;
 //vue-progressbar
 import VueProgressBar from 'vue-progressbar';
 Vue.use(VueProgressBar,{color:'rgb(143,255,199)', failedColor:'red', height:'2px'});
+//validate
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
 /********************************************Tools End************************************************/
 
 /**************************************Global Components Start****************************************/

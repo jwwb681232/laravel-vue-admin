@@ -23,6 +23,7 @@
         "@fortawesome/fontawesome-free": "^5.5.0",
         "admin-lte": "^3.0.0-alpha.2",
         "material-icons": "^0.2.3",
+        "vee-validate": "^2.1.4",
         "vform": "^1.0.0",
         "vue-material-design-icons": "^2.4.0",
         "vue-progressbar": "^0.7.5",

@@ -5,7 +5,7 @@
                 <v-icon dark right>add_circle</v-icon>
             </v-btn>
         </v-toolbar>
-        <v-data-table
+        <!--<v-data-table
                 :headers="headers"
                 :items="desserts"
                 class="elevation-1"
@@ -18,7 +18,7 @@
                 <td class="text-xs-right">{{ props.item.protein }}</td>
                 <td class="text-xs-right">{{ props.item.iron }}</td>
             </template>
-        </v-data-table>
+        </v-data-table>-->
         <v-dialog v-model="dialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
@@ -26,50 +26,16 @@
                 </v-card-title>
                 <v-card-text>
                     <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex xs12 sm12 md12>
-                                <v-text-field label="Legal first name*" required></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md4>
-                                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md4>
-                                <v-text-field
-                                        label="Legal last name*"
-                                        hint="example of persistent helper text"
-                                        persistent-hint
-                                        required
-                                ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12>
-                                <v-text-field label="Email*" required></v-text-field>
-                            </v-flex>
-                            <v-flex xs12>
-                                <v-text-field label="Password*" type="password" required></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6>
-                                <v-select
-                                        :items="['0-17', '18-29', '30-54', '54+']"
-                                        label="Age*"
-                                        required
-                                ></v-select>
-                            </v-flex>
-                            <v-flex xs12 sm6>
-                                <v-autocomplete
-                                        :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                        label="Interests"
-                                        multiple
-                                ></v-autocomplete>
-                            </v-flex>
-                        </v-layout>
+                        <form>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.name" :counter="32" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.icon" :counter="32" :error-messages="errors.collect('icon')" label="Icon" data-vv-name="icon" required></v-text-field>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.href" :counter="32" :error-messages="errors.collect('href')" label="Href" data-vv-name="href" required></v-text-field>
+                            <v-btn @click="submit">submit</v-btn>
+                            <v-btn @click="close">Close</v-btn>
+                        </form>
                     </v-container>
                     <small>*indicates required field</small>
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
@@ -77,10 +43,14 @@
 
 <script>
     export default {
+        /*$_veeValidate: {
+            validator: 'new'
+        },*/
+
         data () {
             return {
                 dialog: false,
-                dropdown_font: [
+                /*dropdown_font: [
                     { text: 'Arial' },
                     { text: 'Calibri' },
                     { text: 'Courier' },
@@ -199,7 +169,12 @@
                         protein: 7,
                         iron: '6%'
                     }
-                ]
+                ],*/
+                addForm:new Form({
+                    name: '',
+                    icon: '',
+                    href: '',
+                }),
             }
         },
         beforeCreate(){
@@ -208,6 +183,30 @@
         mounted(){
             console.log('Component mounted.');
             this.$Progress.finish();
+        },
+        methods: {
+            submit () {
+                this.$validator.validateAll().then(result=>{
+                    if(result){
+                        this.addForm.post('api/menu').then((res)=>{
+                            console.log(res)
+                        }).catch((responseErrors)=>{
+                            let ServerErrors = [];
+                            $.each(responseErrors.response.data.errors, function(field,message) {
+                                ServerErrors.push({field:field,msg:message[0]})
+                            });
+                            this.errors.add(ServerErrors);
+                        });
+                    }
+                })
+            },
+            close () {
+                this.name = '';
+                this.icon = '';
+                this.href = '';
+                this.$validator.reset();
+                this.dialog=false;
+            }
         }
     }
 </script>
