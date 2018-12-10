@@ -9,9 +9,10 @@
 require('./bootstrap');
 window.Vue = require('vue');
 
-import HeyUI from 'heyui';
-Vue.use(HeyUI);
-import 'heyui/themes/index.css';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css'
+import 'material-icons';
+Vue.use(Vuetify);
 /********************************************Base End**************************************************/
 
 /********************************************Tools Start***********************************************/

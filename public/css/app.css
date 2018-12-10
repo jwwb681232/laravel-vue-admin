@@ -6387,43 +6387,43 @@ a.text-muted:hover {
 .elevation-5 {
   -webkit-box-shadow: 0 19px 38px rgba(0,0,0,.3),0 15px 12px rgba(0,0,0,.22);
           box-shadow: 0 19px 38px rgba(0,0,0,.3),0 15px 12px rgba(0,0,0,.22);
-}.blue {
+}.icon-blue {
   color: #3490dc;
 }
 
-.indigo {
+.icon-indigo {
   color: #6574cd;
 }
 
-.purple {
+.icon-purple {
   color: #9561e2;
 }
 
-.pink {
+.icon-pink {
   color: #f66D9b;
 }
 
-.red {
+.icon-red {
   color: #e3342f;
 }
 
-.orange {
+.icon-orange {
   color: #f6993f;
 }
 
-.yellow {
+.icon-yellow {
   color: #ffed4a;
 }
 
-.green {
+.icon-green {
   color: #38c172;
 }
 
-.teal {
+.icon-teal {
   color: #4dc0b5;
 }
 
-.cyan {
+.icon-cyan {
   color: #6cb2eb;
 }
 

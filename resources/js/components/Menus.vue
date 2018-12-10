@@ -1,149 +1,213 @@
-<style>
-    .h-modal .h-notify-content {
-        padding: 0!important;
-    }
-    .card{
-        margin-bottom:0!important;
-    }
-</style>
 <template>
-    <div class="card card-primary card-outline">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fa fa-edit"></i>
-                Menu Component
-            </h3>
-        </div>
-        <div class="card-body pad table-responsive">
-            <p>
-                <Button @click="addNewModalOpened=true" text-color="blue" icon="h-icon-plus">Add New</Button>
-            </p>
-            <Table :datas="datas" ref="table" @select="onselect" checkbox @trclick="trClick" @trdblclick="trdblclick" selectWhenClickTr>
-                <TableItem title="ID"  prop="id" align="center" :width="80" fixed="left"></TableItem>
-                <TableItem title="年龄" prop="age" align="center" :width="150"></TableItem>
-                <TableItem title="地址" prop="address" align="center" :width="150"></TableItem>
-                <TableItem title="操作" align="center" :width="80" fixed="right">
-                    <template slot-scope="{data}">
-                        <button class="h-btn h-btn-s h-btn-red" @click="remove(datas, data)"><i class="h-icon-trash"></i></button>
-                    </template>
-                </TableItem>
-                <div slot="empty">自定义提醒：暂时无数据</div>
-            </Table>
-        </div>
-        <!-- /.card -->
-        <Modal v-model="addNewModalOpened">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Add New</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <div>
-                        <Form ref="form" :label-position="labelPosition" :label-width="90" :rules="validationRules" :model="model">
-                            <FormItem label="菜单名" prop="menuName">
-                                <input type="text" v-model="model.menuName" />
-                            </FormItem>
-                            <FormItem label="菜单链接" prop="menuPath">
-                                <input type="text" v-model="model.menuPath" />
-                            </FormItem>
-                            <FormItem>
-                                <Button color="primary" :loading="isLoading" @click="submit">提交</Button>&nbsp;&nbsp;&nbsp;
-                                <Button @click="reset">取消</Button>
-                            </FormItem>
-                        </Form>
-                    </div>
-                </div>
-                <!-- /.card-body -->
-            </div>
-            <!--<div slot="footer">
-                <Button color="primary">确认</Button>
-                <Button @click="addNewModalOpened=false">关闭</Button>
-                <Button color="red" @click="addNewModalOpened=false">删除</Button>
-            </div>-->
-        </Modal>
+    <div>
+        <v-toolbar>
+            <v-btn color="primary" dark small @click="dialog=true">Add New
+                <v-icon dark right>add_circle</v-icon>
+            </v-btn>
+        </v-toolbar>
+        <v-data-table
+                :headers="headers"
+                :items="desserts"
+                class="elevation-1"
+        >
+            <template slot="items" slot-scope="props">
+                <td>{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.calories }}</td>
+                <td class="text-xs-right">{{ props.item.fat }}</td>
+                <td class="text-xs-right">{{ props.item.carbs }}</td>
+                <td class="text-xs-right">{{ props.item.protein }}</td>
+                <td class="text-xs-right">{{ props.item.iron }}</td>
+            </template>
+        </v-data-table>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">User Profile</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm12 md12>
+                                <v-text-field label="Legal first name*" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md4>
+                                <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md4>
+                                <v-text-field
+                                        label="Legal last name*"
+                                        hint="example of persistent helper text"
+                                        persistent-hint
+                                        required
+                                ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12>
+                                <v-text-field label="Email*" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12>
+                                <v-text-field label="Password*" type="password" required></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-select
+                                        :items="['0-17', '18-29', '30-54', '54+']"
+                                        label="Age*"
+                                        required
+                                ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-autocomplete
+                                        :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                                        label="Interests"
+                                        multiple
+                                ></v-autocomplete>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                    <small>*indicates required field</small>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
+                    <v-btn color="blue darken-1" flat @click="dialog = false">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
     export default {
-        data() {
+        data () {
             return {
-                addNewModalOpened:false,
-                isLoading: false,
-                labelPosition: "left",
-                labels: {
-                    left: 'Label左对齐',
-                    right: 'Label右对齐',
-                },
-                model: {
-                    menuName: "",
-                    menuPath: ""
-                },
-                validationRules: {
-                    required: [
-                        'menuName',
-                        'menuPath'
-                    ]
-                },
-                datas : [
-                    { id: 5, name: '测试5', age: 12, address: "上海" },
-                    { id: 6, name: '测试6', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 5, name: '测试5', age: 12, address: "上海" },
-                    { id: 6, name: '测试6', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 5, name: '测试5', age: 12, address: "上海" },
-                    { id: 6, name: '测试6', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },
-                    { id: 5, name: '测试5', age: 12, address: "上海" },
-                    { id: 6, name: '测试6', age: 12, address: "上海" },
-                    { id: 7, name: '测试7', age: 12, address: "上海" },]
+                dialog: false,
+                dropdown_font: [
+                    { text: 'Arial' },
+                    { text: 'Calibri' },
+                    { text: 'Courier' },
+                    { text: 'Verdana' }
+                ],
+                dropdown_edit: [
+                    { text: '100%' },
+                    { text: '75%' },
+                    { text: '50%' },
+                    { text: '25%' },
+                    { text: '0%' }
+                ],
+                toggle_exclusive: 2,
+                toggle_multiple: [1, 2, 3],
+                headers: [
+                    {
+                        text: 'Dessert (100g serving)',
+                        align: 'left',
+                        sortable: false,
+                        value: 'name'
+                    },
+                    { text: 'Calories', value: 'calories' },
+                    { text: 'Fat (g)', value: 'fat' },
+                    { text: 'Carbs (g)', value: 'carbs' },
+                    { text: 'Protein (g)', value: 'protein' },
+                    { text: 'Iron (%)', value: 'iron' }
+                ],
+                desserts: [
+                    {
+                        value: false,
+                        name: 'Frozen Yogurt',
+                        calories: 159,
+                        fat: 6.0,
+                        carbs: 24,
+                        protein: 4.0,
+                        iron: '1%'
+                    },
+                    {
+                        value: false,
+                        name: 'Ice cream sandwich',
+                        calories: 237,
+                        fat: 9.0,
+                        carbs: 37,
+                        protein: 4.3,
+                        iron: '1%'
+                    },
+                    {
+                        value: false,
+                        name: 'Eclair',
+                        calories: 262,
+                        fat: 16.0,
+                        carbs: 23,
+                        protein: 6.0,
+                        iron: '7%'
+                    },
+                    {
+                        value: false,
+                        name: 'Cupcake',
+                        calories: 305,
+                        fat: 3.7,
+                        carbs: 67,
+                        protein: 4.3,
+                        iron: '8%'
+                    },
+                    {
+                        value: false,
+                        name: 'Gingerbread',
+                        calories: 356,
+                        fat: 16.0,
+                        carbs: 49,
+                        protein: 3.9,
+                        iron: '16%'
+                    },
+                    {
+                        value: false,
+                        name: 'Jelly bean',
+                        calories: 375,
+                        fat: 0.0,
+                        carbs: 94,
+                        protein: 0.0,
+                        iron: '0%'
+                    },
+                    {
+                        value: false,
+                        name: 'Lollipop',
+                        calories: 392,
+                        fat: 0.2,
+                        carbs: 98,
+                        protein: 0,
+                        iron: '2%'
+                    },
+                    {
+                        value: false,
+                        name: 'Honeycomb',
+                        calories: 408,
+                        fat: 3.2,
+                        carbs: 87,
+                        protein: 6.5,
+                        iron: '45%'
+                    },
+                    {
+                        value: false,
+                        name: 'Donut',
+                        calories: 452,
+                        fat: 25.0,
+                        carbs: 51,
+                        protein: 4.9,
+                        iron: '22%'
+                    },
+                    {
+                        value: false,
+                        name: 'KitKat',
+                        calories: 518,
+                        fat: 26.0,
+                        carbs: 65,
+                        protein: 7,
+                        iron: '6%'
+                    }
+                ]
             }
         },
-        mounted() {
-
+        beforeCreate(){
+            this.$Progress.start();
         },
-        methods: {
-            setOddSelection() {
-                this.$refs.table.setSelection(this.datas.filter((item, index) => (index + 1) % 2 === 1))
-            },
-            remove(datas, data) {
-                datas.splice(datas.indexOf(data), 1);
-            },
-            add(datas) {
-                datas.push({ id: 7, name: '添加', age: 12, address: "然后添加的" });
-            },
-            invereSelection() {
-                this.$refs.table.invereSelection();
-            },
-            onselect(data, event) {
-                //log('onselect', data, event);
-            },
-            trClick(data, event) {
-                //log('trClick', data, event);
-            },
-            trdblclick(data, event) {
-                //log('trdblclick', data, event);
-            },
-            submit() {
-                this.isLoading = true;
-                let validResult = this.$refs.form.valid();
-                if (validResult.result) {
-                    this.$Message("验证成功");
-                    setTimeout(() => {
-                        this.isLoading = false;
-                    }, 1000);
-                } else {
-                    this.isLoading = false;
-                }
-            },
-            reset() {
-                this.$refs.form.reset();
-                this.addNewModalOpened = false;
-            }
+        mounted(){
+            console.log('Component mounted.');
+            this.$Progress.finish();
         }
     }
 </script>

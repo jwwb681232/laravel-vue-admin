@@ -13,6 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>AdminLTE 3 | Starter</title>
 
     <link rel="stylesheet" href="/css/app.css">
+
 </head>
 <style>
     .fade-enter-active,
@@ -25,6 +26,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     .fade-enter,
     .fade-leave-active {
         opacity: 0
+    }
+    .main-sidebar {
+        z-index: 1;
+        height: 100vh;
+        overflow-y: hidden;
+    }
+    .main-header {
+        z-index: 1;
     }
 </style>
 <body class="hold-transition sidebar-mini">
@@ -69,7 +78,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="image">
                     <img src="{{ Auth::user()->photo ? asset('storage'.Auth::user()->photo):'./img/profile.png' }}" class="img-circle elevation-2" alt="User Image">
                 </div>
-                <div class="info">
+                <div class="info" style="background: none!important;">
                     <a href="#" class="d-block">
                         {{ Auth::user()->name }}
                     </a>
@@ -83,14 +92,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <router-link to="/dashboard" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt blue"></i>
+                            <i class="nav-icon fas fa-tachometer-alt icon-blue"></i>
                             <p>Dashboard</p>
                         </router-link>
                     </li>
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cogs green"></i>
+                            <i class="nav-icon fas fa-cogs icon-green"></i>
                             <p>
                                 Management
                                 <i class="right fa fa-angle-left"></i>
@@ -113,19 +122,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                     <li class="nav-item">
                         <router-link to="/profile" class="nav-link">
-                            <i class="nav-icon fas fa-user orange"></i>
+                            <i class="nav-icon fas fa-user icon-orange"></i>
                             <p>Profile</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/developer" class="nav-link">
-                            <i class="nav-icon fas fa-cogs orange"></i>
+                            <i class="nav-icon fas fa-cogs icon-orange"></i>
                             <p>OAuth2.0 develop</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="nav-icon fas fa-power-off red"></i>
+                            <i class="nav-icon fas fa-power-off icon-red"></i>
                             <p>{{ __('Logout') }}</p>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -145,7 +154,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <div class="content">
             <div class="container-fluid" style="padding-top: 10px;">
                 <vue-progress-bar></vue-progress-bar>
+                <v-app>
                 <router-view><router-view/>
+                </v-app>
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content -->
