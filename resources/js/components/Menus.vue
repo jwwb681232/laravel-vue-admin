@@ -51,13 +51,16 @@
                     icon: '',
                     href: '',
                 }),
+                menuList:[],
             }
         },
         beforeCreate(){
             this.$Progress.start();
         },
         mounted(){
-            console.log('Component mounted.');
+            axios.get('api/menu').then(({data})=>{
+                this.menuList = data.data
+            });
             this.$Progress.finish();
         },
         methods: {
