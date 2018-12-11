@@ -18,8 +18,8 @@ class CreateMenusTable extends Migration
             $table->string('name')->unique();
             $table->string('icon');
             $table->string('href');
-            $table->integer('parent_id');
-            $table->integer('permission_id');
+            $table->integer('parent_id')->nullable()->default(0);
+            $table->integer('permission_id')->nullable()->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
