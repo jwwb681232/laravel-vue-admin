@@ -1,10 +1,31 @@
 <template>
     <div>
-        <v-toolbar>
-            <v-btn color="primary" dark small @click="dialog=true">Add New
+        <!--<v-toolbar>
+            <v-btn color="primary" dark small @click="addDialog=true">Add New
                 <v-icon dark right>add_circle</v-icon>
             </v-btn>
-        </v-toolbar>
+        </v-toolbar>-->
+
+        <v-card-title>
+            <v-flex xs12 md2>
+                <v-text-field label="Solo" solo></v-text-field>
+            </v-flex>
+            <v-flex xs12 md2>
+                <v-text-field label="Solo" solo></v-text-field>
+            </v-flex>
+            <v-flex xs12 md2>
+                <v-text-field label="Solo" solo></v-text-field>
+            </v-flex>
+            <!--<v-flex xs12 md2>
+                <v-text-field label="Solo" solo></v-text-field>
+            </v-flex>-->
+            <!--<v-flex xs12 md4>
+                <v-btn color="success">Success</v-btn>
+                <v-btn color="error">Error</v-btn>
+                <v-btn color="warning">Warning</v-btn>
+                <v-btn color="info">Info</v-btn>
+            </v-flex>-->
+        </v-card-title>
         <v-data-table
                 :headers="headers"
                 :items="dataList"
@@ -60,7 +81,26 @@
         <!--<div class="text-xs-center pt-2">
             <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
         </div>-->
-        <v-dialog v-model="dialog" persistent max-width="600px">
+        <v-dialog v-model="addDialog" persistent max-width="600px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">User Profile</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <form>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.name" :counter="32" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.icon" :counter="32" :error-messages="errors.collect('icon')" label="Icon" data-vv-name="icon" required></v-text-field>
+                            <v-text-field v-validate="'required|max:32'" v-model="addForm.href" :counter="32" :error-messages="errors.collect('href')" label="Href" data-vv-name="href" required></v-text-field>
+                            <v-btn @click="submit">submit</v-btn>
+                            <v-btn @click="close">Close</v-btn>
+                        </form>
+                    </v-container>
+                    <!--<small>*indicates required field</small>-->
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="editDialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
                     <span class="headline">User Profile</span>
@@ -100,12 +140,18 @@
                     { text: 'Created At', align:'center', value: 'created_at' },
                     { text: 'Action', align:'center',sortable:false, value: 'id' },
                 ],
-                dialog: false,
+                addDialog: false,
                 addForm:new Form({
                     name: '',
                     icon: '',
                     href: '',
                 }),
+                editDialog:false,
+                editForm:new Form({
+                    name: '',
+                    icon: '',
+                    href: '',
+                })
             }
         },
         watch: {
@@ -153,16 +199,16 @@
                         this.addForm.post('api/menu').then((res)=>{
                             this.$Progress.finish();
                             this.dialog=false;
-                        }).catch((responseErrors)=>{
-                            if(responseErrors.response.status === 500){
+                        }).catch(({response})=>{
+                            if(response.status === 500){
                                 toast({
                                     type: 'error',
-                                    title: responseErrors.response.data.message
+                                    title: response.data.message
                                 });
                                 this.$Progress.fail();
                             }else{
                                 let ServerErrors = [];
-                                $.each(responseErrors.response.data, function(field,message) {
+                                $.each(response.data, function(field,message) {
                                     ServerErrors.push({field:field,msg:message[0]})
                                 });
                                 this.errors.add(ServerErrors);
@@ -175,7 +221,7 @@
             close () {
                 this.addForm.reset();
                 this.$validator.reset();
-                this.dialog=false;
+                this.addDialog=false;
             },
             editItem(item){
                 console.log(item);
