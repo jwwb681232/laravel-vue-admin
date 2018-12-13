@@ -20,6 +20,6 @@ class ApiListPresenter extends FractalPresenter
      */
     public function getTransformer()
     {
-        return new TableDataTransformer();
+        return new ApiListTransformer();
     }
 }

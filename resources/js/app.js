@@ -25,6 +25,8 @@ Vue.use(VueProgressBar,{color:'rgb(143,255,199)', failedColor:'red', height:'2px
 //validate
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
+import Swal from 'sweetalert2';
+window.toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 3000});
 /********************************************Tools End************************************************/
 
 /**************************************Global Components Start****************************************/

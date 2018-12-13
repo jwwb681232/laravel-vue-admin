@@ -17,4 +17,20 @@ class MenuRepository extends BaseRepository
     {
         return Menu::class;
     }
+
+    public function search()
+    {
+        $this->applyCriteria();
+        $condition = $this->model;
+
+        $total = $condition->count();
+        $data['dataList']  = $this->parserResult(
+            $condition->offset(request('start',0))->limit(request('length',5))->get()
+        )['data'];
+
+        $data['totalRecords']    = $total;
+
+        return $data;
+    }
+
 }

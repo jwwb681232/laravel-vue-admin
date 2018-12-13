@@ -5,7 +5,7 @@
  * Date: 2018/12/11
  * Time: 20:54
  */
-namespace App\V2\Admin\Transformers\Giro;
+namespace App\Http\Transformers\Menu;
 
 
 use App\Entities\Menu;

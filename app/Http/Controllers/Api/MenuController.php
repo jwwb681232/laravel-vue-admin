@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Criteria\Menu\ApiListCriteria;
+use App\Http\Presenters\Menu\ApiListPresenter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Validators\MenuValidator;
@@ -33,7 +35,10 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $this->repository->pushCriteria(ApiListCriteria::class);
+        $this->repository->setPresenter(ApiListPresenter::class);
 
+        return response()->json($this->repository->search());
     }
 
     /**
