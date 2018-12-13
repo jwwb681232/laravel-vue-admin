@@ -12,10 +12,18 @@
                 :total-items="totalRecords"
                 :rows-per-page-items="[5,10,20]"
                 :loading="loading"
+                v-model="selected"
                 class="elevation-1"
+                select-all
         >
             <template slot="items" slot-scope="props">
-                <td><v-checkbox v-model="props.selected" primary hide-details></v-checkbox></td>
+                <td>
+                    <v-checkbox
+                            v-model="props.selected"
+                            primary
+                            hide-details
+                    ></v-checkbox>
+                </td>
                 <td class="text-xs-center">{{ props.item.id }}</td>
                 <td class="text-xs-center">{{ props.item.name }}</td>
                 <td class="text-xs-center">{{ props.item.icon }}</td>
@@ -63,7 +71,6 @@
                 loading: true,
                 pagination: {},
                 headers: [
-                    {text: 'ID', align: 'center', sortable:false, value: 'id'},
                     {text: 'ID', align: 'center', value: 'id'},
                     { text: 'Name',align:'center', value: 'name' },
                     { text: 'Icon', align:'center', value: 'icon' },
@@ -88,6 +95,16 @@
                             this.dataList = data.dataList;
                             this.totalRecords = data.totalRecords
                         })
+                },
+                deep: true
+            },
+            selected:{
+                handler () {
+                    let ids = [];
+                    this.selected.map(({id})=>{
+                        ids.push(id);
+                    });
+                    console.log(ids)
                 },
                 deep: true
             }
