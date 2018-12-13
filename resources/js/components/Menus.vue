@@ -31,8 +31,29 @@
                 <td class="text-xs-center">{{ props.item.parent_id }}</td>
                 <td class="text-xs-center">{{ props.item.created_at }}</td>
                 <td class="text-xs-center">
-                    <v-icon small @click="editItem(props.item)">edit</v-icon>
-                    <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+                    <!--<v-speed-dial :fab="true" :open-on-hover="true" direction="left" transition="slide-x-reverse-transition">
+                        <v-btn slot="activator" small color="blue darken-2" dark :fab="true">
+                            <v-icon>account_circle</v-icon>
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                        <v-btn fab dark small color="green">
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                        <v-btn fab dark small color="indigo">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                        <v-btn fab dark small color="red">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </v-speed-dial>-->
+                    <v-tooltip top>
+                        <v-icon slot="activator" small @click="editItem(props.item)" color="blue">edit</v-icon>
+                        <span>Edit</span>
+                    </v-tooltip>
+                    <v-tooltip top>
+                        <v-icon slot="activator" small @click="editItem(props.item)" color="red">delete</v-icon>
+                        <span>Delete</span>
+                    </v-tooltip>
                 </td>
             </template>
         </v-data-table>
