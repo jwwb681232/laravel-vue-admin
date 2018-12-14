@@ -81,7 +81,7 @@
         <!--<div class="text-xs-center pt-2">
             <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
         </div>-->
-        <v-dialog v-model="addDialog" persistent max-width="600px">
+        <!--<v-dialog v-model="addDialog" persistent max-width="600px">
             <v-card>
                 <v-card-title>
                     <span class="headline">User Profile</span>
@@ -96,7 +96,7 @@
                             <v-btn @click="close">Close</v-btn>
                         </form>
                     </v-container>
-                    <!--<small>*indicates required field</small>-->
+                    &lt;!&ndash;<small>*indicates required field</small>&ndash;&gt;
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -115,10 +115,10 @@
                             <v-btn @click="close">Close</v-btn>
                         </form>
                     </v-container>
-                    <!--<small>*indicates required field</small>-->
+                    &lt;!&ndash;<small>*indicates required field</small>&ndash;&gt;
                 </v-card-text>
             </v-card>
-        </v-dialog>
+        </v-dialog>-->
     </div>
 </template>
 
@@ -140,7 +140,7 @@
                     { text: 'Created At', align:'center', value: 'created_at' ,width:'15%'},
                     { text: 'Action', align:'center',sortable:false, value: 'id' ,width:'15%'},
                 ],
-                addDialog: false,
+                /*addDialog: false,
                 addForm:new Form({
                     name: '',
                     icon: '',
@@ -151,7 +151,7 @@
                     name: '',
                     icon: '',
                     href: '',
-                })
+                })*/
             }
         },
         watch: {
@@ -186,13 +186,13 @@
             }
         },*/
         beforeCreate(){
-            this.$Progress.start();
+            /*this.$Progress.start();*/
         },
         mounted(){
-            this.$Progress.finish();
+            /*this.$Progress.finish();*/
         },
         methods: {
-            submit () {
+            /*submit () {
                 this.$validator.validateAll().then(result=>{
                     if(result){
                         this.$Progress.start();
@@ -217,11 +217,11 @@
                         });
                     }
                 })
-            },
+            },*/
             close () {
-                this.addForm.reset();
+                /*this.addForm.reset();
                 this.$validator.reset();
-                this.addDialog=false;
+                this.addDialog=false;*/
             },
             editItem(item){
                 console.log(item);

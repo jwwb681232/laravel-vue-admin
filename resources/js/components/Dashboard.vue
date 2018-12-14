@@ -1,37 +1,46 @@
 <template>
-    <div class="card card-primary card-outline">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fa fa-edit"></i>
-                Dashboard Component
-            </h3>
-        </div>
-        <!-- /.card -->
+    <div class="text-xs-center">
+        <v-bottom-sheet v-model="sheet">
+            <v-btn
+                    slot="activator"
+                    color="purple"
+                    dark
+            >
+                Click me
+            </v-btn>
+
+            <v-list>
+                <v-subheader>Open in</v-subheader>
+                <v-list-tile
+                        v-for="tile in tiles"
+                        :key="tile.title"
+                        @click="sheet = false"
+                >
+                    <v-list-tile-avatar>
+                        <v-avatar size="32px" tile>
+                            <img
+                                    :src="`https://cdn.vuetifyjs.com/images/bottom-sheets/${tile.img}`"
+                                    :alt="tile.title"
+                            >
+                        </v-avatar>
+                    </v-list-tile-avatar>
+                    <v-list-tile-title>{{ tile.title }}</v-list-tile-title>
+                </v-list-tile>
+            </v-list>
+        </v-bottom-sheet>
     </div>
 </template>
-
 <script>
     export default {
-        data() {
-            return {
-                datas: []
-            }
-        },
-        mounted() {
-            axios({
-                method:"get",
-                url:"http://yyjobs-api-dev.guabean.com/index.php/api/employee/info",
-                data:{"action":"refreshToken"},
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Accept': 'application/x.yyjobs-api.v3+json',
-                    "Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC95eWpvYnMtYXBpLWRldi5ndWFiZWFuLmNvbVwvaW5kZXgucGhwXC9hcGlcL2VtcGxveWVlXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU0NDYwMzY2MywiZXhwIjoxNTQ1ODk5NjYzLCJuYmYiOjE1NDQ2MDM2NjMsImp0aSI6IkI2YWlBRmtjUzU0bnhZRkoiLCJzdWIiOjgxMTQsInBydiI6Ijg2NjVhZTk3NzVjZjI2ZjZiOGU0OTZmODZmYTUzNmQ2OGRkNzE4MTgifQ.TzTzj5BA-xWZ6qlGZemlC0Xgz6skWi_YJCQf6ZCm2Fk"
-                }
-            }).then().catch();
-
-        },
-        methods: {
-
-        }
+        data: () => ({
+            sheet: false,
+            tiles: [
+                { img: 'keep.png', title: 'Keep' },
+                { img: 'inbox.png', title: 'Inbox' },
+                { img: 'hangouts.png', title: 'Hangouts' },
+                { img: 'messenger.png', title: 'Messenger' },
+                { img: 'google.png', title: 'Google+' }
+            ]
+        })
     }
 </script>

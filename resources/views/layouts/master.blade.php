@@ -15,168 +15,139 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="/css/app.css">
 
 </head>
-<style>
-    .fade-enter-active,
-    .fade-leave-active {
-        transition-duration: 0.1s;
-        transition-property: opacity;
-        transition-timing-function: ease;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-        opacity: 0
-    }
-    .main-sidebar {
-        z-index: 1;
-        height: 100vh;
-        overflow-y: hidden;
-    }
-    .main-header {
-        z-index: 1;
-    }
-</style>
-<body class="hold-transition sidebar-mini">
-<div class="wrapper" id="app">
-
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
-        <!-- Left navbar links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
-            </li>
-        </ul>
-
-        <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-            <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="overflow-x: hidden;">
-        <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
-            <img src="./img/logo.png" alt="Laravel Vue Admin Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light">Laravel Vue Admin</span>
-        </a>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ Auth::user()->photo ? asset('storage'.Auth::user()->photo):'./img/profile.png' }}" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info" style="background: none!important;">
-                    <a href="#" class="d-block">
-                        {{ Auth::user()->name }}
-                    </a>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <router-link to="/dashboard" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt icon-blue"></i>
-                            <p>Dashboard</p>
-                        </router-link>
-                    </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-cogs icon-green"></i>
-                            <p>
-                                Management
-                                <i class="right fa fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <router-link to="/users" class="nav-link">
-                                    <i class="fa fa-users nav-icon"></i>
-                                    <p>Users</p>
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/menus" class="nav-link">
-                                    <i class="fa fa-bars nav-icon"></i>
-                                    <p>Menus</p>
-                                </router-link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <router-link to="/profile" class="nav-link">
-                            <i class="nav-icon fas fa-user icon-orange"></i>
-                            <p>Profile</p>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link to="/developer" class="nav-link">
-                            <i class="nav-icon fas fa-cogs icon-orange"></i>
-                            <p>OAuth2.0 develop</p>
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="nav-icon fas fa-power-off icon-red"></i>
-                            <p>{{ __('Logout') }}</p>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-        </div>
-        <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Main content -->
-        <div class="content">
-            <div class="container-fluid" style="padding-top: 10px;">
-                <vue-progress-bar></vue-progress-bar>
-                <v-app>
-                <router-view><router-view/>
-                </v-app>
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
-            Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2018 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-    </footer>
+<body>
+<div id="app">
+    <v-app>
+        <template>
+            <v-app id="inspire">
+                <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app>
+                    <v-list dense>
+                        <template>
+                            {{--<v-list-group v-if="item.children" v-model="item.model" :key="item.text" :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
+                                <v-list-tile slot="activator">
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            @{{ item.text }}
+                                        </v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile v-for="(child, i) in item.children" :key="i" @click="">
+                                    <v-list-tile-action v-if="child.icon">
+                                        <v-icon>@{{ child.icon }}</v-icon>
+                                    </v-list-tile-action>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            @{{ child.text }}
+                                        </v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                            </v-list-group>
+                            <v-list-tile v-else :key="item.text" @click="">
+                                <v-list-tile-action>
+                                    <v-icon>@{{ item.icon }}</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        @{{ item.text }}
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>--}}
+                            <v-list-tile @click="">
+                                <v-list-tile-action>
+                                    <v-icon>contacts</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>
+                                        Contacts
+                                    </v-list-tile-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                            <v-list-group :prepend-icon="false ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" append-icon="">
+                                <v-list-tile slot="activator">
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            Labels
+                                        </v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                                <v-list-tile @click="">
+                                    <v-list-tile-action>
+                                        <v-icon>add</v-icon>
+                                    </v-list-tile-action>
+                                    <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            Create label
+                                        </v-list-tile-title>
+                                    </v-list-tile-content>
+                                </v-list-tile>
+                            </v-list-group>
+                        </template>
+                    </v-list>
+                </v-navigation-drawer>
+                <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
+                    <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+                        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+                        <span class="hidden-sm-and-down">Google Contacts</span>
+                    </v-toolbar-title>
+                    <v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>
+                    <v-spacer></v-spacer>
+                    <v-btn icon><v-icon>apps</v-icon></v-btn>
+                    <v-btn icon><v-icon>notifications</v-icon></v-btn>
+                    <v-btn icon large>
+                        <v-avatar size="32px" tile>
+                            <img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify">
+                        </v-avatar>
+                    </v-btn>
+                </v-toolbar>
+                <v-content>
+                    <router-view><router-view/>
+                </v-content>
+                <v-btn fab bottom right color="pink" dark fixed @click="dialog = !dialog">
+                    <v-icon>add</v-icon>
+                </v-btn>
+                <v-dialog v-model="dialog" width="800px">
+                    <v-card>
+                        <v-card-title class="grey lighten-4 py-4 title">
+                            Create contact
+                        </v-card-title>
+                        <v-container grid-list-sm class="pa-4">
+                            <v-layout row wrap>
+                                <v-flex xs12 align-center justify-space-between>
+                                    <v-layout align-center>
+                                        <v-avatar size="40px" class="mr-3">
+                                            <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt="">
+                                        </v-avatar>
+                                        <v-text-field placeholder="Name"></v-text-field>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex xs6>
+                                    <v-text-field prepend-icon="business" placeholder="Company"></v-text-field>
+                                </v-flex>
+                                <v-flex xs6><v-text-field placeholder="Job title"></v-text-field></v-flex>
+                                <v-flex xs12>
+                                    <v-text-field prepend-icon="mail" placeholder="Email"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-text-field type="tel" prepend-icon="phone" placeholder="(000) 000 - 0000" mask="phone"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12>
+                                    <v-text-field prepend-icon="notes" placeholder="Notes"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                        <v-card-actions>
+                            <v-btn flat color="primary">More</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
+                            <v-btn flat @click="dialog = false">Save</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-app>
+        </template>
+    </v-app>
 </div>
-<!-- ./wrapper -->
-
-<!-- REQUIRED SCRIPTS -->
-
+</body>
 <script src="/js/app.js"></script>
 </body>
 </html>

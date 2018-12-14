@@ -6,21 +6,8 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import '~admin-lte/dist/css/adminlte.min.css';
+//@import '~bootstrap/scss/bootstrap';
 
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
-
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-.router-link-exact-active{
-  background-color: #3F51B5;
-  color: #FFF !important;
-}
-button, button:active, button:focus, button:hover, .btn, .btn:active, .btn:focus, .btn:hover {
-  outline: none !important;
-}

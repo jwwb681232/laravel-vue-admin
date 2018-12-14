@@ -7,35 +7,25 @@
 
 /********************************************Base Start************************************************/
 require('./bootstrap');
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import 'roboto-fontface';
+import 'vuetify/dist/vuetify.min.css';
 window.Vue = require('vue');
-
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css'
-import 'material-icons';
+import Vuetify from 'vuetify'
 Vue.use(Vuetify);
+
 /********************************************Base End**************************************************/
 
 /********************************************Tools Start***********************************************/
-//vform
-import {Form,HasError} from 'vform';
-window.Form = Form;
-//vue-progressbar
-import VueProgressBar from 'vue-progressbar';
-Vue.use(VueProgressBar,{color:'rgb(143,255,199)', failedColor:'red', height:'2px'});
-//validate
-import VeeValidate from 'vee-validate';
-Vue.use(VeeValidate);
-import Swal from 'sweetalert2';
-window.toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 3000});
 /********************************************Tools End************************************************/
 
 /**************************************Global Components Start****************************************/
-Vue.component(HasError.name, HasError);
 Vue.component('passport-clients', require('./components/passport/Clients.vue'));
 Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
 Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
 Vue.component('example-component', require('./components/Dashboard.vue'));
 /**************************************Global Components End***************************************/
+
 /******************************************Router Start********************************************/
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -57,4 +47,21 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     router,
+    data:()=>({
+        dialog: false,
+        drawer: null,
+        /*items: [
+            { icon: 'contacts', text: 'Contacts' },
+            {
+                icon: 'keyboard_arrow_up',
+                'icon-alt': 'keyboard_arrow_down',
+                text: 'Labels',
+                model: false,
+                children: [
+                    { icon: 'add', text: 'Create label' }
+                ]
+            },
+            { icon: 'settings', text: 'Settings' }
+        ]*/
+    })
 });
