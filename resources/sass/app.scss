@@ -11,3 +11,35 @@
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+a{
+  text-decoration: none;
+  color: #212121!important;
+}
+.router-link-exact-active {
+  text-decoration: none;
+  color: #1565C0!important;
+}
+/*.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+.router-link-exact-active{
+  color: blue !important;
+  text-decoration: none
+}
+
+.router-link-exact-active .v-list__tile{
+  color: #FFFFFF !important;
+  background: #3B7ECA;
+  text-decoration: none
+}
+.router-link-exact-active .v-list__tile:hover{
+  color: blue !important;
+  background: red;
+  text-decoration: none
+}
+
+button, button:active, button:focus, button:hover, .btn, .btn:active, .btn:focus, .btn:hover {
+  outline: none !important;
+}*/

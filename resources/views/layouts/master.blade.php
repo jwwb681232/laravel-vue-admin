@@ -20,68 +20,68 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <v-app>
         <template>
             <v-app id="inspire">
-                <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app>
-                    <v-list dense>
-                        <template>
-                            {{--<v-list-group v-if="item.children" v-model="item.model" :key="item.text" :prepend-icon="item.model ? item.icon : item['icon-alt']" append-icon="">
-                                <v-list-tile slot="activator">
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>
-                                            @{{ item.text }}
-                                        </v-list-tile-title>
-                                    </v-list-tile-content>
-                                </v-list-tile>
-                                <v-list-tile v-for="(child, i) in item.children" :key="i" @click="">
-                                    <v-list-tile-action v-if="child.icon">
-                                        <v-icon>@{{ child.icon }}</v-icon>
-                                    </v-list-tile-action>
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>
-                                            @{{ child.text }}
-                                        </v-list-tile-title>
-                                    </v-list-tile-content>
-                                </v-list-tile>
-                            </v-list-group>
-                            <v-list-tile v-else :key="item.text" @click="">
-                                <v-list-tile-action>
-                                    <v-icon>@{{ item.icon }}</v-icon>
-                                </v-list-tile-action>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>
-                                        @{{ item.text }}
-                                    </v-list-tile-title>
-                                </v-list-tile-content>
-                            </v-list-tile>--}}
-                            <v-list-tile @click="">
-                                <v-list-tile-action>
-                                    <v-icon>contacts</v-icon>
-                                </v-list-tile-action>
-                                <v-list-tile-content>
-                                    <v-list-tile-title>
-                                        Contacts
-                                    </v-list-tile-title>
-                                </v-list-tile-content>
+                <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" fixed app disable-route-watcher>
+                    <v-list>
+                        <v-list-tile>
+                            <v-list-tile-action>
+                                <v-icon>home</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-title>Home</v-list-tile-title>
+                        </v-list-tile>
+
+                        <v-list-group prepend-icon="account_circle">
+                            <v-list-tile slot="activator">
+                                <v-list-tile-title>Users</v-list-tile-title>
                             </v-list-tile>
-                            <v-list-group :prepend-icon="false ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" append-icon="">
+
+                            <v-list-group no-action sub-group>
                                 <v-list-tile slot="activator">
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>
-                                            Labels
-                                        </v-list-tile-title>
-                                    </v-list-tile-content>
+                                    <v-list-tile-title>Admin</v-list-tile-title>
                                 </v-list-tile>
-                                <v-list-tile @click="">
+
+                                <v-list-tile>
+                                    <v-list-tile-title v-text="'Management'"></v-list-tile-title>
                                     <v-list-tile-action>
-                                        <v-icon>add</v-icon>
+                                        <v-icon v-text="'people_outline'"></v-icon>
                                     </v-list-tile-action>
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>
-                                            Create label
-                                        </v-list-tile-title>
-                                    </v-list-tile-content>
+                                </v-list-tile>
+
+                                <v-list-tile>
+                                    <v-list-tile-title v-text="'Settings'"></v-list-tile-title>
+                                    <v-list-tile-action>
+                                        <v-icon v-text="'settings'"></v-icon>
+                                    </v-list-tile-action>
+                                </v-list-tile>
+
+                            </v-list-group>
+
+                            <v-list-group sub-group no-action>
+                                <v-list-tile slot="activator">
+                                    <v-list-tile-title>Actions</v-list-tile-title>
+                                </v-list-tile>
+
+                                <v-list-tile>
+                                    <v-list-tile-title v-text="'Create'"></v-list-tile-title>
+                                    <v-list-tile-action>
+                                        <v-icon v-text="'add'"></v-icon>
+                                    </v-list-tile-action>
+                                </v-list-tile>
+
+                                <v-list-tile>
+                                    <v-list-tile-title v-text="'Read'"></v-list-tile-title>
+                                    <v-list-tile-action>
+                                        <v-icon v-text="'insert_drive_file'"></v-icon>
+                                    </v-list-tile-action>
+                                </v-list-tile>
+
+                                <v-list-tile>
+                                    <v-list-tile-title v-text="'Update'"></v-list-tile-title>
+                                    <v-list-tile-action>
+                                        <v-icon v-text="'update'"></v-icon>
+                                    </v-list-tile-action>
                                 </v-list-tile>
                             </v-list-group>
-                        </template>
+                        </v-list-group>
                     </v-list>
                 </v-navigation-drawer>
                 <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
