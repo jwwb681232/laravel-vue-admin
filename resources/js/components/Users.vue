@@ -38,7 +38,7 @@
                                 </v-flex>
                             </v-layout>
                             <v-card-actions class="pl-0">
-                                <v-btn small color="blue" class="white--text">Filter
+                                <v-btn small color="indigo" class="white--text">Filter
                                     <v-icon right small>fa-filter</v-icon>
                                 </v-btn>
                                 <v-btn small>Reset
