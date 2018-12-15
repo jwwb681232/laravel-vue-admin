@@ -48,7 +48,6 @@ const app = new Vue({
     el: '#app',
     router,
     data:()=>({
-        dialog: false,
         drawer: null,
         /*items: [
             { icon: 'contacts', text: 'Contacts' },
