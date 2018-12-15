@@ -1,5 +1,24 @@
 <template>
     <div>
+        <!--<v-toolbar dark color="success">
+            <v-toolbar-side-icon></v-toolbar-side-icon>
+            <v-toolbar-title class="white&#45;&#45;text">Title</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon><v-icon>search</v-icon></v-btn>
+            <v-btn icon><v-icon>apps</v-icon></v-btn>
+            <v-btn icon><v-icon>refresh</v-icon></v-btn>
+            <v-btn icon><v-icon>more_vert</v-icon></v-btn>
+        </v-toolbar>-->
+        <v-expansion-panel>
+            <v-expansion-panel-content>
+                <div slot="header">ToolBar</div>
+                <!--<v-icon slot="actions" color="primary">$vuetify.icons.expand</v-icon>-->
+                <v-icon slot="actions" color="primary" small>fa-filter</v-icon>
+                <v-card>
+                    <v-card-text class="grey lighten-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                </v-card>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
         <v-data-table :headers="headers" :items="dataList" :pagination.sync="pagination" :total-items="totalRecords" :rows-per-page-items="[5,10,20]" :loading="loading" v-model="selected" class="elevation-1" select-all>
             <template slot="items" slot-scope="props">
                 <td>

@@ -75,6 +75,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <v-list-tile-title v-text="'Update'"></v-list-tile-title>
                             </v-list-tile>
                         </v-list-group>
+
+                        <v-list-tile class="v-list__tile--link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <v-list-tile-action>
+                                <v-icon>logout</v-icon>
+                            </v-list-tile-action>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            <v-list-tile-title>Logout</v-list-tile-title>
+                        </v-list-tile>
                     </v-list>
                 </v-navigation-drawer>
                 </template>
@@ -83,7 +93,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                         <span class="hidden-sm-and-down">Google Contacts</span>
                     </v-toolbar-title>
-                    <v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>
+                    {{--<v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>--}}
                     <v-spacer></v-spacer>
                     <v-btn icon><v-icon>apps</v-icon></v-btn>
                     <v-btn icon><v-icon>notifications</v-icon></v-btn>
@@ -93,9 +103,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </v-avatar>
                     </v-btn>
                 </v-toolbar>
-                <v-content>
-                    <router-view><router-view/>
-                </v-content>
+                <v-container fluid>
+                    <v-content>
+                        <router-view><router-view/>
+                    </v-content>
+                </v-container>
             </v-app>
         </template>
     </v-app>
