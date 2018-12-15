@@ -15,7 +15,38 @@
                 <!--<v-icon slot="actions" color="primary">$vuetify.icons.expand</v-icon>-->
                 <v-icon slot="actions" color="primary" small>fa-filter</v-icon>
                 <v-card>
-                    <v-card-text class="grey lighten-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                    <v-card-text>
+                        <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="One"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="Two"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="Three"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="Four"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="Five"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-text-field label="Six"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                            <v-card-actions class="pl-0">
+                                <v-btn small color="blue" class="white--text">Filter
+                                    <v-icon right small>fa-filter</v-icon>
+                                </v-btn>
+                                <v-btn small>Reset
+                                    <v-icon color="teal" right small>fa-broom</v-icon>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-container>
+                    </v-card-text>
                 </v-card>
             </v-expansion-panel-content>
         </v-expansion-panel>
@@ -24,11 +55,11 @@
                 <td>
                     <v-checkbox v-model="props.selected" primary hide-details></v-checkbox>
                 </td>
-                <td class="text-xs-center">{{ props.item.id }}</td>
-                <td class="text-xs-center">{{ props.item.name }}</td>
-                <td class="text-xs-center">{{ props.item.email }}</td>
-                <td class="text-xs-center">{{ props.item.created_at }}</td>
-                <td class="text-xs-center">
+                <td class="text-xs-center text-no-wrap">{{ props.item.id }}</td>
+                <td class="text-xs-center text-no-wrap">{{ props.item.name }}</td>
+                <td class="text-xs-center text-no-wrap">{{ props.item.email }}</td>
+                <td class="text-xs-center text-no-wrap">{{ props.item.created_at }}</td>
+                <td class="text-xs-center text-no-wrap">
                     <v-tooltip top>
                         <v-icon slot="activator" small @click="editItem(props.item)" color="blue">edit</v-icon>
                         <span>Edit</span>
