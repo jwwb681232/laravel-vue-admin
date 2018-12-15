@@ -20,7 +20,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <v-app>
         <template>
             <v-app id="inspire">
-                <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" fixed app disable-route-watcher>
+                <template>
+                {{--<v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" fixed app disable-route-watcher>--}}
+                    <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app>
                     <v-list>
                         <v-list-tile>
                             <v-list-tile-action>
@@ -29,61 +31,54 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <v-list-tile-title>Home</v-list-tile-title>
                         </v-list-tile>
 
-                        <v-list-group prepend-icon="account_circle">
+                        <v-list-group prepend-icon="settings">
                             <v-list-tile slot="activator">
-                                <v-list-tile-title>Users</v-list-tile-title>
+                                <v-list-tile-title>Management</v-list-tile-title>
                             </v-list-tile>
 
-                            <v-list-group no-action sub-group>
-                                <v-list-tile slot="activator">
-                                    <v-list-tile-title>Admin</v-list-tile-title>
-                                </v-list-tile>
+                            <v-list-tile to="/menus">
+                                <v-list-tile-action style="padding-left: 5px;">
+                                    <v-icon small>fas fa-calendar-minus</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title>Menu</v-list-tile-title>
+                            </v-list-tile>
 
-                                <v-list-tile>
-                                    <v-list-tile-title v-text="'Management'"></v-list-tile-title>
-                                    <v-list-tile-action>
-                                        <v-icon v-text="'people_outline'"></v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
+                            <v-list-tile to="/users">
+                                <v-list-tile-action style="padding-left: 5px;">
+                                    <v-icon small>fas fa-user</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title>User</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list-group>
+                        <v-list-group prepend-icon="account_circle">
+                            <v-list-tile slot="activator">
+                                <v-list-tile-title>Actions</v-list-tile-title>
+                            </v-list-tile>
 
-                                <v-list-tile>
-                                    <v-list-tile-title v-text="'Settings'"></v-list-tile-title>
-                                    <v-list-tile-action>
-                                        <v-icon v-text="'settings'"></v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-icon v-text="'add'"></v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title v-text="'Create'"></v-list-tile-title>
+                            </v-list-tile>
 
-                            </v-list-group>
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-icon v-text="'insert_drive_file'"></v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title v-text="'Read'"></v-list-tile-title>
+                            </v-list-tile>
 
-                            <v-list-group sub-group no-action>
-                                <v-list-tile slot="activator">
-                                    <v-list-tile-title>Actions</v-list-tile-title>
-                                </v-list-tile>
-
-                                <v-list-tile>
-                                    <v-list-tile-title v-text="'Create'"></v-list-tile-title>
-                                    <v-list-tile-action>
-                                        <v-icon v-text="'add'"></v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
-
-                                <v-list-tile>
-                                    <v-list-tile-title v-text="'Read'"></v-list-tile-title>
-                                    <v-list-tile-action>
-                                        <v-icon v-text="'insert_drive_file'"></v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
-
-                                <v-list-tile>
-                                    <v-list-tile-title v-text="'Update'"></v-list-tile-title>
-                                    <v-list-tile-action>
-                                        <v-icon v-text="'update'"></v-icon>
-                                    </v-list-tile-action>
-                                </v-list-tile>
-                            </v-list-group>
+                            <v-list-tile>
+                                <v-list-tile-action>
+                                    <v-icon v-text="'update'"></v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title v-text="'Update'"></v-list-tile-title>
+                            </v-list-tile>
                         </v-list-group>
                     </v-list>
                 </v-navigation-drawer>
+                </template>
                 <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
                     <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
                         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
