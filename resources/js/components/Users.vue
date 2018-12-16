@@ -19,9 +19,10 @@
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md2>
-                                    <v-text-field label="One"></v-text-field>
+                                    <v-text-field v-model="filter.keyword" append-icon="search" label="Keyword"></v-text-field>
+                                    <!--<v-input append-icon="close" prepend-icon="phone">Default Slot</v-input>-->
                                 </v-flex>
-                                <v-flex xs12 sm6 md2>
+                                <!--<v-flex xs12 sm6 md2>
                                     <v-text-field label="Two"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md2>
@@ -35,13 +36,13 @@
                                 </v-flex>
                                 <v-flex xs12 sm6 md2>
                                     <v-text-field label="Six"></v-text-field>
-                                </v-flex>
+                                </v-flex>-->
                             </v-layout>
                             <v-card-actions class="pl-0">
-                                <v-btn small color="indigo" class="white--text">Filter
+                                <v-btn small color="indigo" class="white--text" @click="tableFilter">Filter
                                     <v-icon right small>fa-filter</v-icon>
                                 </v-btn>
-                                <v-btn small>Reset
+                                <v-btn small @click="tableFilterReset">Reset
                                     <v-icon color="teal" right small>fa-broom</v-icon>
                                 </v-btn>
                             </v-card-actions>
@@ -125,6 +126,9 @@
                 dataList: [],
                 loading: true,
                 pagination: {},
+                filter:{
+                    keyword:''
+                },
                 headers: [
                     {text: 'ID', align: 'center', value: 'id',width:'20%'},
                     { text: 'Name',align:'center', value: 'name' ,width:'20%'},
@@ -161,10 +165,22 @@
         mounted(){
         },
         methods: {
-            close () {
+            tableFilter(){
+                this.getDataFromApi()
+                    .then(data => {
+                        this.dataList = data.dataList;
+                        this.totalRecords = data.totalRecords
+                    })
             },
-            editItem(item){
-                console.log(item);
+            tableFilterReset(){
+                Object.keys(this.filter).map((item)=>{
+                    this.filter[item] = ''
+                })
+                this.getDataFromApi()
+                    .then(data => {
+                        this.dataList = data.dataList;
+                        this.totalRecords = data.totalRecords
+                    })
             },
             getDataFromApi () {
                 this.loading = true;
@@ -175,6 +191,7 @@
                         order : descending ? 'DESC' : 'ASC',
                         start : (page - 1) * rowsPerPage,
                         length : rowsPerPage,
+                        keyword:this.filter.keyword
                     }}).then((response)=>{
                         let dataList = response.data.dataList;
                         let totalRecords = response.data.totalRecords;

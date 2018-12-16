@@ -91,7 +91,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <v-toolbar :clipped-left="$vuetify.breakpoint.lgAndUp" color="blue darken-3" dark app fixed>
                     <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
                         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-                        <span class="hidden-sm-and-down">Google Contacts</span>
+                        <span class="hidden-sm-and-down">Laravel Vue Admin</span>
                     </v-toolbar-title>
                     {{--<v-text-field flat solo-inverted hide-details prepend-inner-icon="search" label="Search" class="hidden-sm-and-down"></v-text-field>--}}
                     <v-spacer></v-spacer>

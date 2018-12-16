@@ -27,6 +27,11 @@ class ApiListCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        return $model->orderBy(request('orderBy'),request('order'));
+        $keyword = request('keyword');
+        return $model
+            ->when($keyword,function($query)use($keyword){
+                return $query->where('name','like',"%{$keyword}%");
+            })
+            ->orderBy(request('orderBy'),request('order'));
     }
 }
