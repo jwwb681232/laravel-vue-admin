@@ -29,8 +29,12 @@ class ApiListCriteria implements CriteriaInterface
     {
         $keyword = request('keyword');
         $type    = request('type');
+        $deleted = request('deleted');
 
         return $model
+            ->when($deleted == 'true',function($query){
+                return $query->onlyTrashed();
+            })
             ->when($keyword,function($query)use($keyword){
                 return $query->where('name','like',"%{$keyword}%");
             })

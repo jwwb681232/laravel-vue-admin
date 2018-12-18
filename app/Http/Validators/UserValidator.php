@@ -21,6 +21,12 @@ class UserValidator extends LaravelValidator implements ValidatorInterface
                 'password' => 'required|string|min:6|max:32',
                 'type'     => 'required',
             ],
+            'update' => [
+                'name'     => 'required|string|min:3|max:255',
+                'email'    => 'required|string|email|max:32|max:255|unique:users,email',
+                'password' => 'required|string|min:6|max:32',
+                'type'     => 'required',
+            ],
         ];
 
     /*protected $messages

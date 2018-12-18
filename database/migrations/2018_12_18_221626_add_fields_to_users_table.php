@@ -14,7 +14,7 @@ class AddFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('type',['user','admin'])->default('user');
+            $table->softDeletes();
         });
     }
 
@@ -26,7 +26,7 @@ class AddFieldsToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->removeColumn('type');
+            $table->removeColumn('deleted_at');
         });
     }
 }

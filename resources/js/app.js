@@ -17,6 +17,9 @@ import {Form} from 'vform';
 window.Form = Form;
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
+import swal from 'sweetalert2'
+window.swal = swal;
+window.toast = swal.mixin({toast:true, position:'top-end', showConfirmButton:false, timer:3000});
 /********************************************Base End**************************************************/
 
 /********************************************Tools Start***********************************************/

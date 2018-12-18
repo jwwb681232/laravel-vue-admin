@@ -23,7 +23,11 @@
                                     <!--<v-input append-icon="close" prepend-icon="phone">Default Slot</v-input>-->
                                 </v-flex>
                                 <v-flex xs12 sm6 md2>
-                                    <v-autocomplete v-model="tableData.filter.type" :items="publicData.type" item-value="value" label="Type"></v-autocomplete>
+                                    <v-autocomplete append-icon="list" v-model="tableData.filter.type" :items="publicData.type" item-value="value" label="Type"></v-autocomplete>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <!--<v-switch label="DELETED" v-model="tableData.filter.deleted"></v-switch>-->
+                                    <v-checkbox label="DELETED" v-model="tableData.filter.deleted"></v-checkbox>
                                 </v-flex>
                                 <!--<v-flex xs12 sm6 md2>
                                     <v-text-field label="Two"></v-text-field>
@@ -69,7 +73,7 @@
                         <span>Edit</span>
                     </v-tooltip>
                     <v-tooltip top>
-                        <v-icon slot="activator" small @click="editItem(props.item)" color="red">delete</v-icon>
+                        <v-icon slot="activator" small @click="deleteItem(props.item)" color="red">delete</v-icon>
                         <span>Delete</span>
                     </v-tooltip>
                 </td>
@@ -84,11 +88,11 @@
                     Create User
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
-                    <form>
-                        <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-validate="'required|email|max:255'" v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-validate="'required|min:6|max:32'" v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="createDialogForm.form.type" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-autocomplete>
+                    <form data-vv-scope="create">
+                        <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-text-field v-validate="'required|email|max:255'" v-model="createDialogForm.form.email" :error-messages="errors.collect('create.email')" label="Email" data-vv-name="email" required></v-text-field>
+                        <v-text-field v-validate="'required|min:6|max:32'" v-model="createDialogForm.form.password" :error-messages="errors.collect('create.password')" label="Password" data-vv-name="password" required></v-text-field>
+                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="createDialogForm.form.type" item-value="value" :error-messages="errors.collect('create.type')"  label="Type" data-vv-name="type" required></v-autocomplete>
                         <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
                         <v-text-field v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
@@ -100,6 +104,31 @@
                     <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="createDialogFormSubmitClose">Cancel</v-btn>
                     <v-btn flat @click="createDialogFormSubmit">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="editDialogForm.eidtDialog" persistent max-width="500px">
+            <v-card>
+                <v-card-title class="grey lighten-4 py-4 title">
+                    Create User
+                </v-card-title>
+                <v-container grid-list-sm class="pa-4">
+                    <form data-vv-scope="edit">
+                        <v-text-field v-validate="'required|min:3|max:255'" v-model="editDialogForm.form.name" :error-messages="errors.collect('edit.name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-text-field v-validate="'required|email|max:255'" v-model="editDialogForm.form.email" :error-messages="errors.collect('edit.email')" label="Email" data-vv-name="email" required></v-text-field>
+                        <v-text-field v-model="editDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password"></v-text-field>
+                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="editDialogForm.form.type" item-value="value" :error-messages="errors.collect('edit.type')"  label="Type" data-vv-name="type" required></v-autocomplete>
+                        <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
+                        <v-text-field v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
+                        <v-select :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>-->
+                    </form>
+                </v-container>
+                <v-card-actions>
+                    <!--<v-btn flat color="primary">More</v-btn>-->
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="editDialogFormSubmitClose">Cancel</v-btn>
+                    <v-btn flat @click="editDialogFormSubmit">Save</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -118,7 +147,7 @@
                 },
                 tableData :{
                     create: true,
-                    filter:{keyword:'',type:''},
+                    filter:{keyword:'',type:'',deleted:false},
                     selected: [],
                     totalRecords: 0,
                     dataList: [],
@@ -134,6 +163,16 @@
                 createDialogForm:{
                     createDialog:false,
                     form: new Form({
+                        name: '',
+                        email: '',
+                        password: '',
+                        type: ''
+                    })
+                },
+                editDialogForm:{
+                    eidtDialog:false,
+                    form: new Form({
+                        id:'',
                         name: '',
                         email: '',
                         password: '',
@@ -167,12 +206,38 @@
                     this.tableData.selected.map(({id})=>{
                         ids.push(id);
                     });
-                    console.log(ids)
                 },
                 deep: true
             }
         },
         methods: {
+            deleteItem(item){
+                swal({
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to do this?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.createDialogForm.form.delete('api/user/'+item.id).then((res)=>{
+                            swal('Deleted!', 'Your file has been deleted.', 'success')
+                            this.tableFilterReset();
+                        }).catch((error)=>{
+                            swal('Error!', 'Something went wrong!', 'error')
+                            this.tableFilterReset();
+                        })
+                    }
+                })
+            },
+            editItem(item){
+                this.errors.clear('edit')
+                console.log(this.$validator.errors)
+                this.editDialogForm.form.fill(item);
+                this.editDialogForm.eidtDialog=true;
+            },
             tableFilter(){
                 this.getDataFromApi()
                     .then(data => {
@@ -191,7 +256,7 @@
                     })
             },
             createDialogFormSubmit () {
-                this.$validator.validateAll().then(result=>{
+                this.$validator.validateAll('create').then(result=>{
                     if(result){
                         this.createDialogForm.form.post('api/user').then((res)=>{
                             this.createDialogForm.createDialog = false;
@@ -199,7 +264,23 @@
                         }).catch((responseErrors)=>{
                             let ServerErrors = [];
                             $.each(responseErrors.response.data, function(field,message) {
-                                ServerErrors.push({field:field,msg:message[0]})
+                                ServerErrors.push({field:field,msg:message[0],scope:'create'})
+                            });
+                            this.errors.add(ServerErrors);
+                        });
+                    }
+                });
+            },
+            editDialogFormSubmit () {
+                this.$validator.validateAll('edit').then(result=>{
+                    if(result){
+                        this.editDialogForm.form.patch('api/user/'+this.editDialogForm.form.id).then((res)=>{
+                            this.editDialogForm.createDialog = false;
+                            this.tableFilterReset();
+                        }).catch((responseErrors)=>{
+                            let ServerErrors = [];
+                            $.each(responseErrors.response.data, function(field,message) {
+                                ServerErrors.push({field:field,msg:message[0],scope:'edit'})
                             });
                             this.errors.add(ServerErrors);
                         });
@@ -207,9 +288,14 @@
                 })
             },
             createDialogFormSubmitClose() {
-                this.$validator.errors.clear();
+                this.errors.clear('create')
                 this.createDialogForm.form.reset();
                 this.createDialogForm.createDialog = false;
+            },
+            editDialogFormSubmitClose() {
+                this.errors.clear('edit')
+                this.editDialogForm.form.reset();
+                this.editDialogForm.eidtDialog = false;
             },
             getDataFromApi () {
                 this.tableData.loading = true;
@@ -222,6 +308,7 @@
                         length : rowsPerPage,
                         keyword:this.tableData.filter.keyword,
                         type:this.tableData.filter.type,
+                        deleted:this.tableData.filter.deleted,
                     }}).then((response)=>{
                         let dataList = response.data.dataList;
                         let totalRecords = response.data.totalRecords;
