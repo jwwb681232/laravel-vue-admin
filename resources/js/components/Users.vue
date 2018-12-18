@@ -22,6 +22,9 @@
                                     <v-text-field v-model="tableData.filter.keyword" append-icon="search" label="Keyword"></v-text-field>
                                     <!--<v-input append-icon="close" prepend-icon="phone">Default Slot</v-input>-->
                                 </v-flex>
+                                <v-flex xs12 sm6 md2>
+                                    <v-autocomplete v-model="tableData.filter.type" :items="publicData.type" item-value="value" label="Type"></v-autocomplete>
+                                </v-flex>
                                 <!--<v-flex xs12 sm6 md2>
                                     <v-text-field label="Two"></v-text-field>
                                 </v-flex>
@@ -82,14 +85,14 @@
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
                     <form>
-                        <!--<v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-text-field v-validate="'required|email|max:255'" v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
                         <v-text-field v-validate="'required|min:6|max:32'" v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-select v-validate="'required'" :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>-->
-                        <v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="createDialogForm.form.type" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-autocomplete>
+                        <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
                         <v-text-field v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-select :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>
+                        <v-select :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>-->
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -115,7 +118,7 @@
                 },
                 tableData :{
                     create: true,
-                    filter:{keyword:''},
+                    filter:{keyword:'',type:''},
                     selected: [],
                     totalRecords: 0,
                     dataList: [],
@@ -191,9 +194,9 @@
                 this.$validator.validateAll().then(result=>{
                     if(result){
                         this.createDialogForm.form.post('api/user').then((res)=>{
-                            console.log(res)
+                            this.createDialogForm.createDialog = false;
+                            this.tableFilterReset();
                         }).catch((responseErrors)=>{
-                            /*console.log(responseErrors.response.data);*/
                             let ServerErrors = [];
                             $.each(responseErrors.response.data, function(field,message) {
                                 ServerErrors.push({field:field,msg:message[0]})
@@ -204,7 +207,7 @@
                 })
             },
             createDialogFormSubmitClose() {
-                this.$validator.reset();
+                this.$validator.errors.clear();
                 this.createDialogForm.form.reset();
                 this.createDialogForm.createDialog = false;
             },
@@ -217,7 +220,8 @@
                         order : descending ? 'DESC' : 'ASC',
                         start : (page - 1) * rowsPerPage,
                         length : rowsPerPage,
-                        keyword:this.tableData.filter.keyword
+                        keyword:this.tableData.filter.keyword,
+                        type:this.tableData.filter.type,
                     }}).then((response)=>{
                         let dataList = response.data.dataList;
                         let totalRecords = response.data.totalRecords;
