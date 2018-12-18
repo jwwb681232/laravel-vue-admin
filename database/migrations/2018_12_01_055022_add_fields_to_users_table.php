@@ -14,9 +14,7 @@ class AddFieldsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('type')->default('user');
-            $table->mediumText('bio')->nullable();
-            $table->string('photo')->nullable();
+            $table->enum('type',['user','admin'])->default('user');
         });
     }
 

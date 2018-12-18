@@ -13,7 +13,10 @@ import 'vuetify/dist/vuetify.min.css';
 window.Vue = require('vue');
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
-
+import {Form} from 'vform';
+window.Form = Form;
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
 /********************************************Base End**************************************************/
 
 /********************************************Tools Start***********************************************/
