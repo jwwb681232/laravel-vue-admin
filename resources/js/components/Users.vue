@@ -116,7 +116,7 @@
                     <form data-vv-scope="edit">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="editDialogForm.form.name" :error-messages="errors.collect('edit.name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-text-field v-validate="'required|email|max:255'" v-model="editDialogForm.form.email" :error-messages="errors.collect('edit.email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-model="editDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password"></v-text-field>
+                        <v-text-field v-model="editDialogForm.form.password" :error-messages="errors.collect('edit.password')" label="Password" data-vv-name="password"></v-text-field>
                         <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="editDialogForm.form.type" item-value="value" :error-messages="errors.collect('edit.type')"  label="Type" data-vv-name="type" required></v-autocomplete>
                         <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
