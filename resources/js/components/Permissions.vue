@@ -20,13 +20,6 @@
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md2>
                                     <v-text-field v-model="tableData.filter.keyword" append-icon="search" label="Keyword"></v-text-field>
-                                    <!--<v-input append-icon="close" prepend-icon="phone">Default Slot</v-input>-->
-                                </v-flex>
-                                <v-flex xs12 sm6 md2 dense>
-                                    <v-autocomplete append-icon="list" v-model="tableData.filter.type" :items="publicData.type" item-value="value" label="Type"></v-autocomplete>
-                                </v-flex>
-                                <v-flex xs12 sm6 md2 dense>
-                                    <v-checkbox label="DELETED" v-model="tableData.filter.deleted"></v-checkbox>
                                 </v-flex>
                             </v-layout>
                             <v-card-actions class="pl-0">
@@ -49,7 +42,7 @@
                 </td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.id }}</td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.name }}</td>
-                <td class="text-xs-center text-no-wrap">{{ props.item.email }}</td>
+                <td class="text-xs-center text-no-wrap">{{ props.item.guard_name }}</td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.created_at }}</td>
                 <td class="text-xs-center text-no-wrap">
                     <v-tooltip top>
@@ -74,13 +67,7 @@
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="create">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-validate="'required|email|max:255'" v-model="createDialogForm.form.email" :error-messages="errors.collect('create.email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-validate="'required|min:6|max:32'" v-model="createDialogForm.form.password" :error-messages="errors.collect('create.password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="createDialogForm.form.type" item-value="value" :error-messages="errors.collect('create.type')"  label="Type" data-vv-name="type" required></v-autocomplete>
-                        <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-select :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>-->
+                        <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="createDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('create.guard_name')"  label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -99,13 +86,7 @@
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="edit">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="editDialogForm.form.name" :error-messages="errors.collect('edit.name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-validate="'required|email|max:255'" v-model="editDialogForm.form.email" :error-messages="errors.collect('edit.email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-model="editDialogForm.form.password" :error-messages="errors.collect('edit.password')" label="Password" data-vv-name="password"></v-text-field>
-                        <v-autocomplete v-validate="'required'" :items="publicData.type" v-model="editDialogForm.form.type" item-value="value" :error-messages="errors.collect('edit.type')"  label="Type" data-vv-name="type" required></v-autocomplete>
-                        <!--<v-text-field v-model="createDialogForm.form.name" :error-messages="errors.collect('name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-model="createDialogForm.form.email" :error-messages="errors.collect('email')" label="Email" data-vv-name="email" required></v-text-field>
-                        <v-text-field v-model="createDialogForm.form.password" :error-messages="errors.collect('password')" label="Password" data-vv-name="password" required></v-text-field>
-                        <v-select :items="publicData.type" v-model="createDialogForm.form.type" return-object item-text="text" item-value="value" :error-messages="errors.collect('type')"  label="Type" data-vv-name="type" required></v-select>-->
+                        <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="editDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('edit.guard_name')"  label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -124,14 +105,13 @@
         data () {
             return {
                 publicData: {
-                    type: [
-                            {text: 'User', value: 'user'},
+                    guard_name: [
                             {text: 'Admin', value: 'admin'}
                         ]
                 },
                 tableData :{
                     create: true,
-                    filter:{keyword:'',type:'',deleted:false},
+                    filter:{keyword:''},
                     selected: [],
                     totalRecords: 0,
                     dataList: [],
@@ -139,7 +119,7 @@
                     headers: [
                         {text: 'ID', align: 'center', value: 'id',width:'20%'},
                         { text: 'Name',align:'center', value: 'name' ,width:'20%'},
-                        { text: 'Email', align:'center', value: 'email' ,width:'20%'},
+                        { text: 'Guard Name', align:'center', value: 'guard_name' ,width:'20%'},
                         { text: 'Created At', align:'center', value: 'created_at' ,width:'20%'},
                         { text: 'Action', align:'center',sortable:false, value: 'id' ,width:'20%'},
                     ],
@@ -148,9 +128,7 @@
                     createDialog:false,
                     form: new Form({
                         name: '',
-                        email: '',
-                        password: '',
-                        type: ''
+                        guard_name: '',
                     })
                 },
                 editDialogForm:{
@@ -158,9 +136,7 @@
                     form: new Form({
                         id:'',
                         name: '',
-                        email: '',
-                        password: '',
-                        type: ''
+                        guard_name: '',
                     })
                 }
             }
@@ -206,19 +182,19 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        this.createDialogForm.form.delete('api/user/'+item.id).then((res)=>{
-                            swal('Deleted!', 'Your file has been deleted.', 'success')
+                        this.createDialogForm.form.delete('api/permission/'+item.id).then((res)=>{
+                            swal('Deleted!', 'Your file has been deleted.', 'success');
                             this.tableFilterReset();
                         }).catch((error)=>{
-                            swal('Error!', 'Something went wrong!', 'error')
+                            swal('Error!', 'Something went wrong!', 'error');
                             this.tableFilterReset();
                         })
                     }
                 })
             },
             editItem(item){
-                this.errors.clear('edit')
-                console.log(this.$validator.errors)
+                this.errors.clear('edit');
+                console.log(this.$validator.errors);
                 this.editDialogForm.form.fill(item);
                 this.editDialogForm.editDialog=true;
             },
@@ -227,7 +203,7 @@
                     .then(data => {
                         this.tableData.dataList = data.dataList;
                         this.tableData.totalRecords = data.totalRecords
-                    })
+                    });
             },
             tableFilterReset(){
                 Object.keys(this.tableData.filter).map((item)=>{
@@ -242,7 +218,7 @@
             createDialogFormSubmit () {
                 this.$validator.validateAll('create').then(result=>{
                     if(result){
-                        this.createDialogForm.form.post('api/user').then((res)=>{
+                        this.createDialogForm.form.post('api/permission').then((res)=>{
                             this.createDialogForm.createDialog = false;
                             this.tableFilterReset();
                         }).catch((responseErrors)=>{
@@ -258,7 +234,7 @@
             editDialogFormSubmit () {
                 this.$validator.validateAll('edit').then(result=>{
                     if(result){
-                        this.editDialogForm.form.patch('api/user/'+this.editDialogForm.form.id).then((res)=>{
+                        this.editDialogForm.form.patch('api/permission/'+this.editDialogForm.form.id).then((res)=>{
                             this.editDialogForm.createDialog = false;
                             this.tableFilterReset();
                         }).catch((responseErrors)=>{
@@ -272,12 +248,12 @@
                 })
             },
             createDialogFormSubmitClose() {
-                this.errors.clear('create')
+                this.errors.clear('create');
                 this.createDialogForm.form.reset();
                 this.createDialogForm.createDialog = false;
             },
             editDialogFormSubmitClose() {
-                this.errors.clear('edit')
+                this.errors.clear('edit');
                 this.editDialogForm.form.reset();
                 this.editDialogForm.editDialog = false;
             },
@@ -285,14 +261,12 @@
                 this.tableData.loading = true;
                 return new Promise((resolve,reject)=>{
                     const { sortBy, descending, page, rowsPerPage } = this.tableData.pagination;
-                    axios.get('api/user',{params:{
+                    axios.get('api/permission',{params:{
                         orderBy : sortBy ? sortBy : 'id',
                         order : descending ? 'DESC' : 'ASC',
                         start : (page - 1) * rowsPerPage,
                         length : rowsPerPage,
                         keyword:this.tableData.filter.keyword,
-                        type:this.tableData.filter.type,
-                        deleted:this.tableData.filter.deleted,
                     }}).then((response)=>{
                         let dataList = response.data.dataList;
                         let totalRecords = response.data.totalRecords;

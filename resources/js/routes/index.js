@@ -3,5 +3,6 @@ let routes = [
     {path: '/developer', component: require('../components/Developer.vue')},
     {path: '/menus', component: require('../components/Menus.vue')},
     {path: '/users', component: require('../components/Users.vue')},
+    {path: '/permissions', component: require('../components/Permissions.vue')},
 ];
 export default routes;

@@ -48,6 +48,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </v-list-tile-action>
                                 <v-list-tile-title>User</v-list-tile-title>
                             </v-list-tile>
+
+                            <v-list-tile to="/permissions">
+                                <v-list-tile-action style="padding-left: 5px;">
+                                    <v-icon small>fa fa-cubes</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title>Permission</v-list-tile-title>
+                            </v-list-tile>
                         </v-list-group>
                         <v-list-group prepend-icon="account_circle">
                             <v-list-tile slot="activator">

@@ -7,10 +7,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
-    use Notifiable,HasApiTokens,SoftDeletes;
+    use Notifiable,HasApiTokens,SoftDeletes,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -31,4 +31,6 @@ class User extends Authenticatable
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $guard_name = 'admin';
 }
