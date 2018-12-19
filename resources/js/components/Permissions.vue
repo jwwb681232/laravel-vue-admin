@@ -209,6 +209,7 @@
                 Object.keys(this.tableData.filter).map((item)=>{
                     this.tableData.filter[item] = ''
                 });
+                this.createDialogForm.form.reset();
                 this.getDataFromApi()
                     .then(data => {
                         this.tableData.dataList = data.dataList;

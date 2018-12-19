@@ -16,9 +16,8 @@ class PermissionValidator extends LaravelValidator implements ValidatorInterface
     protected $rules
         = [
             'store' => [
-                'name'     => 'required|string|max:32|unique:menus,name',
-                'icon'     => 'required|string|max:32',
-                'href'     => 'required|string|max:32',
+                'name'       => 'required|string|max:32',
+                'guard_name' => 'required|string|max:32',
             ],
         ];
 

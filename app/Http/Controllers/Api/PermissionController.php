@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Validators\PermissionValidator;
 use App\Http\Repositories\PermissionRepository;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class PermissionController extends Controller
 {
@@ -44,4 +45,25 @@ class PermissionController extends Controller
 
         return response()->json($this->repository->search());
     }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
+     */
+    public function store(Request $request)
+    {
+        try {
+            $this->validator->with($request->all())->passesOrFail('store');
+            return $this->repository->makeModel()->create($request->all());
+        } catch (\Exception $e) {
+            if ($e instanceof \Spatie\Permission\Exceptions\PermissionAlreadyExists){
+                return response(['name'=>[$e->getMessage()]],422);
+            }
+            if($e instanceof ValidatorException){
+                return response($e->getMessageBag(),422);
+            }
+        }
+    }
+
 }
