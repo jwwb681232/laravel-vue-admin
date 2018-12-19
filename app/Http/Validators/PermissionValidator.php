@@ -19,6 +19,10 @@ class PermissionValidator extends LaravelValidator implements ValidatorInterface
                 'name'       => 'required|string|max:32',
                 'guard_name' => 'required|string|max:32',
             ],
+            'update' => [
+                'name'       => 'required|string|max:32',
+                'guard_name' => 'required|string|max:32',
+            ],
         ];
 
     /*protected $messages

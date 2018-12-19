@@ -18,8 +18,11 @@
                     <v-card-text class="grey lighten-3">
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm6 md2>
+                                <v-flex xs12 sm6 md2 dense>
                                     <v-text-field v-model="tableData.filter.keyword" append-icon="search" label="Keyword"></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm6 md2 dense>
+                                    <v-checkbox label="DELETED" v-model="tableData.filter.deleted"></v-checkbox>
                                 </v-flex>
                             </v-layout>
                             <v-card-actions class="pl-0">
@@ -111,7 +114,7 @@
                 },
                 tableData :{
                     create: true,
-                    filter:{keyword:''},
+                    filter:{keyword:'',deleted:false},
                     selected: [],
                     totalRecords: 0,
                     dataList: [],
@@ -236,7 +239,7 @@
                 this.$validator.validateAll('edit').then(result=>{
                     if(result){
                         this.editDialogForm.form.patch('api/permission/'+this.editDialogForm.form.id).then((res)=>{
-                            this.editDialogForm.createDialog = false;
+                            this.editDialogForm.editDialog = false;
                             this.tableFilterReset();
                         }).catch((responseErrors)=>{
                             let ServerErrors = [];
@@ -268,6 +271,7 @@
                         start : (page - 1) * rowsPerPage,
                         length : rowsPerPage,
                         keyword:this.tableData.filter.keyword,
+                        deleted:this.tableData.filter.deleted,
                     }}).then((response)=>{
                         let dataList = response.data.dataList;
                         let totalRecords = response.data.totalRecords;

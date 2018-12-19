@@ -66,4 +66,31 @@ class PermissionController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param         $id
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|mixed
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $this->validator->with($request->all())->passesOrFail('update');
+            return $this->repository->updatePermission($request->all(),$id);
+        } catch (ValidatorException $e) {
+            return response($e->getMessageBag(),422);
+        }
+
+    }
+
+    /**
+     * @param $id
+     *
+     * @return int
+     */
+    public function destroy($id)
+    {
+        return intval($this->repository->delete($id));
+    }
+
 }
