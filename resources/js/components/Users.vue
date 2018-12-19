@@ -15,35 +15,19 @@
                 <!--<v-icon slot="actions" color="primary">$vuetify.icons.expand</v-icon>-->
                 <v-icon slot="actions" color="primary" small>fa-filter</v-icon>
                 <v-card>
-                    <v-card-text>
+                    <v-card-text class="grey lighten-3">
                         <v-container grid-list-md>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md2>
                                     <v-text-field v-model="tableData.filter.keyword" append-icon="search" label="Keyword"></v-text-field>
                                     <!--<v-input append-icon="close" prepend-icon="phone">Default Slot</v-input>-->
                                 </v-flex>
-                                <v-flex xs12 sm6 md2>
+                                <v-flex xs12 sm6 md2 dense>
                                     <v-autocomplete append-icon="list" v-model="tableData.filter.type" :items="publicData.type" item-value="value" label="Type"></v-autocomplete>
                                 </v-flex>
-                                <v-flex xs12 sm6 md2>
-                                    <!--<v-switch label="DELETED" v-model="tableData.filter.deleted"></v-switch>-->
+                                <v-flex xs12 sm6 md2 dense>
                                     <v-checkbox label="DELETED" v-model="tableData.filter.deleted"></v-checkbox>
                                 </v-flex>
-                                <!--<v-flex xs12 sm6 md2>
-                                    <v-text-field label="Two"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md2>
-                                    <v-text-field label="Three"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md2>
-                                    <v-text-field label="Four"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md2>
-                                    <v-text-field label="Five"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md2>
-                                    <v-text-field label="Six"></v-text-field>
-                                </v-flex>-->
                             </v-layout>
                             <v-card-actions class="pl-0">
                                 <v-btn small color="indigo" class="white--text" @click="tableFilter">Filter

@@ -24,7 +24,7 @@ class UserValidator extends LaravelValidator implements ValidatorInterface
             'update' => [
                 'name'     => 'required|string|min:3|max:255',
                 'email'    => 'required|string|email|max:32|max:255|unique:users,email',
-                'password' => 'required|string|min:6|max:32',
+                'password' => 'sometimes|string|min:6|max:32',
                 'type'     => 'required',
             ],
         ];
