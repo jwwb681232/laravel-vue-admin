@@ -3,10 +3,10 @@
         color: #005caf !important;
         caret-color: #005caf !important;
     }
-    .v-input--selection-controls{
+    /*.v-input--selection-controls{
         margin-top: 0;
         padding-top: 0;
-    }
+    }*/
 </style>
 <template>
     <div>
@@ -81,7 +81,7 @@
                     <v-toolbar-title>Create Role</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click="createDialogFormSubmit">Save</v-btn>
+                        <v-btn dark flat @click="createDialogFormSubmit"><v-icon>save</v-icon>&nbsp;Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <!--<v-card-title class="grey lighten-4 py-4 title">
