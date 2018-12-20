@@ -22,3 +22,4 @@ Route::put('user/profile','Api\UserController@updateProfile');
 Route::apiResource('user','Api\UserController');
 Route::apiResource('menu','Api\MenuController');
 Route::apiResource('permission','Api\PermissionController');
+Route::apiResource('role','Api\RoleController');
