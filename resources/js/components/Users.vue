@@ -94,7 +94,7 @@
         <v-dialog v-model="editDialogForm.editDialog" persistent max-width="500px">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Create User
+                    Edit User
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="edit">

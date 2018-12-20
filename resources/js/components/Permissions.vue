@@ -65,7 +65,7 @@
         <v-dialog v-model="createDialogForm.createDialog" persistent max-width="500px">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Create User
+                    Create Permission
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="create">
@@ -84,7 +84,7 @@
         <v-dialog v-model="editDialogForm.editDialog" persistent max-width="500px">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
-                    Create User
+                    Edit Permission
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="edit">
