@@ -19,7 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('user/profile','Api\UserController@profile');
 Route::put('user/profile','Api\UserController@updateProfile');
+
 Route::apiResource('user','Api\UserController');
+
 Route::apiResource('menu','Api\MenuController');
+
+Route::get('permission/tree','Api\PermissionController@tree');
 Route::apiResource('permission','Api\PermissionController');
+
 Route::apiResource('role','Api\RoleController');

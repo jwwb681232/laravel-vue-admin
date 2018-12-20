@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Permission extends PermissionModel
 {
     use SoftDeletes;
+
+    public function child()
+    {
+        return $this->hasMany(self::class,'parent_id','id');
+    }
 }

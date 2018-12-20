@@ -23,7 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <template>
                     <v-navigation-drawer :clipped="$vuetify.breakpoint.lgAndUp" v-model="drawer" fixed app dark>
                     <v-list>
-                        <v-list-tile>
+                        <v-list-tile ripple>
                             <v-list-tile-action>
                                 <v-icon>home</v-icon>
                             </v-list-tile-action>
@@ -31,32 +31,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </v-list-tile>
 
                         <v-list-group prepend-icon="settings">
-                            <v-list-tile slot="activator">
+                            <v-list-tile ripple slot="activator">
                                 <v-list-tile-title>Management</v-list-tile-title>
                             </v-list-tile>
 
-                            <v-list-tile to="/menus">
+                            <v-list-tile ripple to="/menus">
                                 <v-list-tile-action style="padding-left: 5px;">
                                     <v-icon small>fas fa-calendar-minus</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-title>Menu</v-list-tile-title>
                             </v-list-tile>
 
-                            <v-list-tile to="/users">
+                            <v-list-tile ripple to="/users">
                                 <v-list-tile-action style="padding-left: 5px;">
                                     <v-icon small>fas fa-users</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-title>User</v-list-tile-title>
                             </v-list-tile>
 
-                            <v-list-tile to="/permissions">
+                            <v-list-tile ripple to="/permissions">
                                 <v-list-tile-action style="padding-left: 5px;">
                                     <v-icon small>fa fa-cubes</v-icon>
                                 </v-list-tile-action>
                                 <v-list-tile-title>Permission</v-list-tile-title>
                             </v-list-tile>
 
-                            <v-list-tile to="/roles">
+                            <v-list-tile ripple to="/roles">
                                 <v-list-tile-action style="padding-left: 5px;">
                                     <v-icon small>fa fa-user</v-icon>
                                 </v-list-tile-action>

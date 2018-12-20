@@ -1,3 +1,13 @@
+<style>
+    .accent--text{
+        color: #005caf !important;
+        caret-color: #005caf !important;
+    }
+    .v-input--selection-controls{
+        margin-top: 0;
+        padding-top: 0;
+    }
+</style>
 <template>
     <div>
         <!--<v-toolbar dark color="success">
@@ -59,10 +69,10 @@
                 </td>
             </template>
         </v-data-table>
-        <v-btn fab bottom right color="pink" dark fixed @click="createDialogForm.createDialog = !createDialogForm.createDialog">
+        <v-btn fab bottom right color="pink" dark fixed @click="createItem">
             <v-icon>add</v-icon>
         </v-btn>
-        <v-dialog v-model="createDialogForm.createDialog" persistent max-width="500px">
+        <v-dialog v-model="createDialogForm.createDialog" persistent max-width="800px">
             <v-card>
                 <v-card-title class="grey lighten-4 py-4 title">
                     Create Role
@@ -71,6 +81,21 @@
                     <form data-vv-scope="create">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="createDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('create.guard_name')"  label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
+                        <v-layout row wrap>
+                            <v-flex v-for="item in publicData.permissions" :key="item.id" xs6>
+                                <v-expansion-panel>
+                                    <v-expansion-panel-content>
+                                        <div slot="header">{{item.name}}</div>
+                                        <v-card>
+                                            <v-card-text>
+                                                <v-checkbox v-model="publicData.permissionsSelected" :label="item.name" :value="item.id"></v-checkbox>
+                                                <v-checkbox v-for="permission in item.child" v-model="publicData.permissionsSelected" :label="permission.name" :value="permission.id"></v-checkbox>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                            </v-flex>
+                        </v-layout>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -110,7 +135,9 @@
                 publicData: {
                     guard_name: [
                             {text: 'Admin', value: 'admin'}
-                        ]
+                        ],
+                    permissions:[],
+                    permissionsSelected:[]
                 },
                 tableData :{
                     create: true,
@@ -195,6 +222,14 @@
                     }
                 })
             },
+            createItem(){
+                this.errors.clear('edit');
+                this.createDialogForm.createDialog=true;
+                this.getPermissions()
+                    .then(data => {
+                        this.publicData.permissions = data;
+                    })
+            },
             editItem(item){
                 this.errors.clear('edit');
                 console.log(this.$validator.errors);
@@ -277,6 +312,18 @@
                         let totalRecords = response.data.totalRecords;
                         resolve({dataList,totalRecords});
                         this.tableData.loading = false;
+                    }).catch((err)=>{
+                        reject(err);
+                    });
+                })
+            },
+            getPermissions () {
+                return new Promise((resolve,reject)=>{
+                    axios.get('api/permission/tree',{params:{
+                        guard_name : 'admin',
+                        parent_id : 0
+                    }}).then((response)=>{
+                        resolve(response.data);
                     }).catch((err)=>{
                         reject(err);
                     });
