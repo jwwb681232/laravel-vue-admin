@@ -72,11 +72,21 @@
         <v-btn fab bottom right color="pink" dark fixed @click="createItem">
             <v-icon>add</v-icon>
         </v-btn>
-        <v-dialog v-model="createDialogForm.createDialog" persistent max-width="800px">
+        <v-dialog v-model="createDialogForm.createDialog" fullscreen hide-overlay transition="dialog-bottom-transition">
             <v-card>
-                <v-card-title class="grey lighten-4 py-4 title">
+                <v-toolbar dark color="primary">
+                    <v-btn icon dark @click="createDialogFormSubmitClose">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Create Role</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-toolbar-items>
+                        <v-btn dark flat @click="createDialogFormSubmit">Save</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <!--<v-card-title class="grey lighten-4 py-4 title">
                     Create Role
-                </v-card-title>
+                </v-card-title>-->
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="create">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
@@ -88,8 +98,22 @@
                                         <div slot="header">{{item.name}}</div>
                                         <v-card>
                                             <v-card-text>
-                                                <v-checkbox v-model="publicData.permissionsSelected" :label="item.name" :value="item.id"></v-checkbox>
-                                                <v-checkbox v-for="permission in item.child" v-model="publicData.permissionsSelected" :label="permission.name" :value="permission.id"></v-checkbox>
+                                                <v-layout row wrap>
+                                                    <v-flex xs3 md3 sm3 lg3>
+                                                        <v-card-text><v-checkbox style="margin-top: 0;padding-top: 0;" v-model="publicData.permissionsSelected" :label="item.name" :value="item.id"></v-checkbox></v-card-text>
+                                                    </v-flex>
+                                                    <v-flex xs3 md3 sm3 lg3 v-for="permission in item.child" :key="permission.id">
+                                                        <v-card-text><v-checkbox style="margin-top: 0;padding-top: 0;" v-model="publicData.permissionsSelected" :label="permission.name" :value="permission.id"></v-checkbox></v-card-text>
+                                                    </v-flex>
+                                                </v-layout>
+                                                <!--<v-layout>
+                                                    <v-card xs6 md6 sm6 lg6>
+                                                        <v-checkbox v-model="publicData.permissionsSelected" :label="item.name" :value="item.id"></v-checkbox>
+                                                    </v-card>
+                                                    <v-card v-for="permission in item.child" xs6 md6 sm6 lg6>
+                                                        <v-checkbox v-model="publicData.permissionsSelected" :label="permission.name" :value="permission.id"></v-checkbox>
+                                                    </v-card>
+                                                </v-layout>-->
                                             </v-card-text>
                                         </v-card>
                                     </v-expansion-panel-content>
@@ -98,12 +122,11 @@
                         </v-layout>
                     </form>
                 </v-container>
-                <v-card-actions>
-                    <!--<v-btn flat color="primary">More</v-btn>-->
+                <!--<v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="createDialogFormSubmitClose">Cancel</v-btn>
                     <v-btn flat @click="createDialogFormSubmit">Save</v-btn>
-                </v-card-actions>
+                </v-card-actions>-->
             </v-card>
         </v-dialog>
         <v-dialog v-model="editDialogForm.editDialog" persistent max-width="500px">
