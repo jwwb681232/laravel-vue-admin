@@ -59,7 +59,7 @@
                 </td>
             </template>
         </v-data-table>
-        <v-btn fab bottom right color="pink" dark fixed @click="createDialogForm.createDialog = !createDialogForm.createDialog">
+        <v-btn fab bottom right color="pink" dark fixed @click="createItem">
             <v-icon>add</v-icon>
         </v-btn>
         <v-dialog v-model="createDialogForm.createDialog" persistent max-width="500px">
@@ -70,7 +70,8 @@
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="create">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="createDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('create.guard_name')"  label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
+                        <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="createDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('create.guard_name')" label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
+                        <v-autocomplete clearable :items="publicData.parents" v-model="createDialogForm.form.parent_id" item-value="id" item-text="name" :error-messages="errors.collect('create.parent_id')" label="Parent Permission" data-vv-name="parent_id"></v-autocomplete>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -90,6 +91,7 @@
                     <form data-vv-scope="edit">
                         <v-text-field v-validate="'required|min:3|max:255'" v-model="editDialogForm.form.name" :error-messages="errors.collect('edit.name')" label="Name" data-vv-name="name" required></v-text-field>
                         <v-autocomplete v-validate="'required'" :items="publicData.guard_name" v-model="editDialogForm.form.guard_name" item-value="value" :error-messages="errors.collect('edit.guard_name')"  label="Guard Name" data-vv-name="guard_name" required></v-autocomplete>
+                        <v-autocomplete clearable :items="publicData.parents" v-model="editDialogForm.form.parent_id" item-value="id" item-text="name" :error-messages="errors.collect('edit.parent_id')" label="Parent Permission" data-vv-name="parent_id"></v-autocomplete>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -110,7 +112,8 @@
                 publicData: {
                     guard_name: [
                             {text: 'Admin', value: 'admin'}
-                        ]
+                        ],
+                    parents:[]
                 },
                 tableData :{
                     create: true,
@@ -132,6 +135,7 @@
                     form: new Form({
                         name: '',
                         guard_name: '',
+                        parent_id: 0,
                     })
                 },
                 editDialogForm:{
@@ -140,6 +144,7 @@
                         id:'',
                         name: '',
                         guard_name: '',
+                        parent_id: 0,
                     })
                 }
             }
@@ -195,11 +200,22 @@
                     }
                 })
             },
+            createItem(){
+                this.errors.clear('edit');
+                this.createDialogForm.createDialog=true;
+                this.getTopPermissionsApi()
+                    .then((data) => {
+                        this.publicData.parents = data;
+                    });
+            },
             editItem(item){
                 this.errors.clear('edit');
-                console.log(this.$validator.errors);
                 this.editDialogForm.form.fill(item);
                 this.editDialogForm.editDialog=true;
+                this.getTopPermissionsApi()
+                    .then((data) => {
+                        this.publicData.parents = data;
+                    });
             },
             tableFilter(){
                 this.getDataFromApi()
@@ -277,6 +293,15 @@
                         let totalRecords = response.data.totalRecords;
                         resolve({dataList,totalRecords});
                         this.tableData.loading = false;
+                    }).catch((err)=>{
+                        reject(err);
+                    });
+                })
+            },
+            getTopPermissionsApi () {
+                return new Promise((resolve,reject)=>{
+                    axios.get('api/permission/top').then((response)=>{
+                        resolve(response.data);
                     }).catch((err)=>{
                         reject(err);
                     });

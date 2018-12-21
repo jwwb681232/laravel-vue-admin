@@ -20,6 +20,9 @@ class PermissionRepository extends BaseRepository
         return Permission::class;
     }
 
+    /**
+     * @return mixed
+     */
     public function search()
     {
         $this->applyCriteria();
@@ -44,10 +47,21 @@ class PermissionRepository extends BaseRepository
      */
     public function updatePermission(array $attributes,$id)
     {
-        $permission = $this->model->withTrashed()->where('name',$attributes['name'])->where('guard_name',$attributes['guard_name'])->whereNotIn('id',array_wrap($id))->first();
+        $permission = $this->model->withTrashed()
+                     ->where('name',$attributes['name'])
+                     ->where('guard_name',$attributes['guard_name'])
+                     ->whereNotIn('id',array_wrap($id))->first();
+
         if ($permission){
-            throw new ValidatorException(new MessageBag(['name'=>["A `{$attributes['name']}` permission already exists for guard `{$attributes['guard_name']}`."]]));
+            throw new ValidatorException(
+                new MessageBag(
+                    ['name' => ["A `{$attributes['name']}` permission already exists for guard `{$attributes['guard_name']}`."]]
+                )
+            );
         }
+
+        $attributes['parent_id'] = request('parent_id',0);
+
         return $this->update($attributes,$id);
     }
 

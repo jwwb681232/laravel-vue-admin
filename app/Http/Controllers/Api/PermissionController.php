@@ -9,8 +9,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Criteria\Permission\ApiListCriteria;
 use App\Http\Criteria\Permission\ApiTreeListCriteria;
+use App\Http\Criteria\Permission\ApiTopListCriteria;
 use App\Http\Presenters\Permission\ApiListPresenter;
 use App\Http\Presenters\Permission\ApiTreeListPresenter;
+use App\Http\Presenters\Permission\ApiTopListPresenter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Validators\PermissionValidator;
@@ -55,6 +57,17 @@ class PermissionController extends Controller
     {
         $this->repository->pushCriteria(ApiTreeListCriteria::class);
         $this->repository->setPresenter(ApiTreeListPresenter::class);
+
+        return response()->json($this->repository->all(['id','name','parent_id'])['data']);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function top()
+    {
+        $this->repository->pushCriteria(ApiTopListCriteria::class);
+        $this->repository->setPresenter(ApiTopListPresenter::class);
 
         return response()->json($this->repository->all(['id','name','parent_id'])['data']);
     }

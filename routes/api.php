@@ -25,6 +25,7 @@ Route::apiResource('user','Api\UserController');
 Route::apiResource('menu','Api\MenuController');
 
 Route::get('permission/tree','Api\PermissionController@tree');
+Route::get('permission/top','Api\PermissionController@top');
 Route::apiResource('permission','Api\PermissionController');
 
 Route::apiResource('role','Api\RoleController');
