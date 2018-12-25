@@ -30,7 +30,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <v-list-tile-title>Home</v-list-tile-title>
                         </v-list-tile>
 
-                        <v-list-group prepend-icon="settings">
+                        @foreach($menus as $key=>$value)
+                        <v-list-group prepend-icon="{{ $value->icon }}">
+                            <v-list-tile ripple @if(isset($value->child))slot="activator"@endif>
+                                <v-list-tile-title>{{ $value->name }}</v-list-tile-title>
+                            </v-list-tile>
+                            @foreach($value->child as $k=>$child)
+                            <v-list-tile ripple to="{{ $child->href }}">
+                                <v-list-tile-action style="padding-left: 5px;">
+                                    <v-icon small>{{ $child->icon }}</v-icon>
+                                </v-list-tile-action>
+                                <v-list-tile-title>{{ $child->name }}</v-list-tile-title>
+                            </v-list-tile>
+                            @endforeach
+                        </v-list-group>
+                        @endforeach
+                        {{--<v-list-group prepend-icon="settings">
                             <v-list-tile ripple slot="activator">
                                 <v-list-tile-title>Management</v-list-tile-title>
                             </v-list-tile>
@@ -63,33 +78,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <v-list-tile-title>Role</v-list-tile-title>
                             </v-list-tile>
 
-                        </v-list-group>
-                        <v-list-group prepend-icon="account_circle">
-                            <v-list-tile slot="activator">
-                                <v-list-tile-title>Actions</v-list-tile-title>
-                            </v-list-tile>
-
-                            <v-list-tile>
-                                <v-list-tile-action>
-                                    <v-icon v-text="'add'"></v-icon>
-                                </v-list-tile-action>
-                                <v-list-tile-title v-text="'Create'"></v-list-tile-title>
-                            </v-list-tile>
-
-                            <v-list-tile>
-                                <v-list-tile-action>
-                                    <v-icon v-text="'insert_drive_file'"></v-icon>
-                                </v-list-tile-action>
-                                <v-list-tile-title v-text="'Read'"></v-list-tile-title>
-                            </v-list-tile>
-
-                            <v-list-tile>
-                                <v-list-tile-action>
-                                    <v-icon v-text="'update'"></v-icon>
-                                </v-list-tile-action>
-                                <v-list-tile-title v-text="'Update'"></v-list-tile-title>
-                            </v-list-tile>
-                        </v-list-group>
+                        </v-list-group>--}}
 
                         <v-list-tile class="v-list__tile--link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <v-list-tile-action>

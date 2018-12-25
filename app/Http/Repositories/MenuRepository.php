@@ -33,4 +33,12 @@ class MenuRepository extends BaseRepository
         return $data;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function permissionMenus()
+    {
+        return $this->model->with('child')->where('parent_id',0)->get();
+    }
+
 }
