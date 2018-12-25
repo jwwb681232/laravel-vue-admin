@@ -72,4 +72,14 @@ class MenuController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     *
+     * @return int
+     */
+    public function destroy($id)
+    {
+        return intval($this->repository->delete($id));
+    }
+
 }
