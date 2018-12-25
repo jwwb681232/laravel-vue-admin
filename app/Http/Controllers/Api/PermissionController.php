@@ -106,7 +106,6 @@ class PermissionController extends Controller
         } catch (ValidatorException $e) {
             return response($e->getMessageBag(),422);
         }
-
     }
 
     /**

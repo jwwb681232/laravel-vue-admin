@@ -35,7 +35,7 @@
                 </td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.id }}</td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.name }}</td>
-                <td class="text-xs-center text-no-wrap">{{ props.item.icon }}</td>
+                <td class="text-xs-center text-no-wrap"><v-icon>{{ props.item.icon }}</v-icon></td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.href }}</td>
                 <td class="text-xs-center text-no-wrap">{{ props.item.created_at }}</td>
                 <td class="text-xs-center text-no-wrap">
@@ -60,9 +60,9 @@
                 </v-card-title>
                 <v-container grid-list-sm class="pa-4">
                     <form data-vv-scope="create">
-                        <v-text-field v-validate="'required|min:3|max:255'" v-model="editDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
-                        <v-text-field v-validate="'required|max:255'" v-model="editDialogForm.form.icon" :error-messages="errors.collect('create.icon')" label="Icon" data-vv-name="icon" required></v-text-field>
-                        <v-text-field v-validate="'required|max:255'" v-model="editDialogForm.form.href" :error-messages="errors.collect('create.href')" label="Href" data-vv-name="href" required></v-text-field>
+                        <v-text-field v-validate="'required|min:3|max:255'" v-model="createDialogForm.form.name" :error-messages="errors.collect('create.name')" label="Name" data-vv-name="name" required></v-text-field>
+                        <v-text-field v-validate="'required|max:255'" v-model="createDialogForm.form.icon" :error-messages="errors.collect('create.icon')" label="Icon" data-vv-name="icon" required></v-text-field>
+                        <v-text-field v-validate="'required|max:255'" v-model="createDialogForm.form.href" :error-messages="errors.collect('create.href')" label="Href" data-vv-name="href" required></v-text-field>
                     </form>
                 </v-container>
                 <v-card-actions>
@@ -114,11 +114,12 @@
                     dataList: [],
                     pagination: {},
                     headers: [
-                        {text: 'ID', align: 'center', value: 'id',width:'20%'},
+                        {text: 'ID', align: 'center', value: 'id',width:'10%'},
                         { text: 'Name',align:'center', value: 'name' ,width:'20%'},
-                        { text: 'Email', align:'center', value: 'email' ,width:'20%'},
+                        { text: 'Icon', align:'center', value: 'icon' ,sortable:false, width:'20%'},
+                        { text: 'Href', align:'center', value: 'href' ,sortable:false, width:'20%'},
                         { text: 'Created At', align:'center', value: 'created_at' ,width:'20%'},
-                        { text: 'Action', align:'center',sortable:false, value: 'id' ,width:'20%'},
+                        { text: 'Action', align:'center',value: 'id' ,sortable:false, width:'20%'},
                     ],
                 },
                 createDialogForm:{
